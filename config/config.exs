@@ -12,7 +12,12 @@ import Config
 config :obr_web,
   generators: [context_app: :obr]
 
-# Configures the endpoint
+
+config :obr_mgmt_web,
+  generators: [context_app: :obr]
+
+
+# Configures the public endpoint
 config :obr_web, ObrWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
@@ -23,6 +28,20 @@ config :obr_web, ObrWeb.Endpoint,
   pubsub_server: Obr.PubSub,
   live_view: [signing_salt: "EAAQo9R/"]
 
+
+# Configures the mgmt endpoint
+config :obr_mgmt_web, ObrMgmtWeb.Endpoint,
+  url: [host: "localhost"],
+  adapter: Bandit.PhoenixAdapter,
+  render_errors: [
+    formats: [html: ObrMgmtWeb.ErrorHTML, json: ObrMgmtWeb.ErrorJSON],
+    layout: false
+  ],
+  pubsub_server: Obr.PubSub,
+  live_view: [signing_salt: "EAAQo9R/"]
+
+
+
 # Configure esbuild (the version is required)
 config :esbuild,
   version: "0.17.11",
@@ -31,7 +50,14 @@ config :esbuild,
       ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
     cd: Path.expand("../apps/obr_web/assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ],
+  obr_mgmt_web: [
+    args:
+      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+    cd: Path.expand("../apps/obr_mgmt_web/assets", __DIR__),
+    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]
+
 
 # Configure tailwind (the version is required)
 config :tailwind,

@@ -1,3 +1,3 @@
 # Obr
 
-**TODO: Add description**
+Logic core for the BabyRegistry.

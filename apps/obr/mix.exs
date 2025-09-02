@@ -23,7 +23,8 @@ defmodule Obr.MixProject do
   def application do
     [
       mod: {Obr.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :wx, :observer],
+      included_applications: [:mnesia]
     ]
   end
 
@@ -37,7 +38,10 @@ defmodule Obr.MixProject do
   defp deps do
     [
       {:dns_cluster, "~> 0.1.1"},
-      {:phoenix_pubsub, "~> 2.1"}
+      {:phoenix_pubsub, "~> 2.1"},
+      {:decimal, "~> 2.0"},
+      {:uuid, "~> 1.1"},
+      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
     ]
   end
 

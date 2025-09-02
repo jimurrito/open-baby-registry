@@ -7,7 +7,7 @@ FROM elixir:1.18.4-otp-28
 #
 
 #
-ENV OTP_APP=""
+ENV OTP_APP="obr"
 ENV MIX_ENV=prod
 #
 #
