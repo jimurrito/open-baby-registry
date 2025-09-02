@@ -7,7 +7,6 @@ FROM elixir:1.18.4-otp-28
 #
 
 #
-ENV OTP_APP="obr"
 ENV MIX_ENV=prod
 #
 #
@@ -27,9 +26,10 @@ RUN mix compile
 RUN mix assets.setup
 RUN mix assets.deploy
 RUN mix phx.digest
-RUN mix phx.gen.release
+#RUN mix phx.gen.release # does not work with umbrella apps
 RUN mix release
 #
 EXPOSE 4000
+EXPOSE 4400
 #
-CMD ["bash", "start.bash", "$OTP_APP"]
+CMD ["bash", "start.bash", "obr"]

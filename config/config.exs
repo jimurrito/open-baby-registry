@@ -19,6 +19,7 @@ config :obr_mgmt_web,
 
 # Configures the public endpoint
 config :obr_web, ObrWeb.Endpoint,
+  server: true,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
@@ -31,6 +32,7 @@ config :obr_web, ObrWeb.Endpoint,
 
 # Configures the mgmt endpoint
 config :obr_mgmt_web, ObrMgmtWeb.Endpoint,
+  server: true,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
@@ -69,6 +71,14 @@ config :tailwind,
       --output=../priv/static/assets/app.css
     ),
     cd: Path.expand("../apps/obr_web/assets", __DIR__)
+  ],
+  obr_mgmt_web: [
+    args: ~w(
+      --config=tailwind.config.js
+      --input=css/app.css
+      --output=../priv/static/assets/app.css
+    ),
+    cd: Path.expand("../apps/obr_mgmt_web/assets", __DIR__)
   ]
 
 # Configures Elixir's Logger
