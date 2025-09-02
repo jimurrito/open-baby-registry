@@ -39,6 +39,7 @@ defmodule Obr.MixProject do
     [
       {:dns_cluster, "~> 0.1.1"},
       {:phoenix_pubsub, "~> 2.1"},
+      {:finch, "~> 0.20.0"},
       {:decimal, "~> 2.0"},
       {:uuid, "~> 1.1"},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
