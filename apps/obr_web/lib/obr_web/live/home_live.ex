@@ -8,6 +8,7 @@ defmodule ObrWeb.HomeLive do
   alias Phoenix.LiveView.JS
   alias Obr.Auditor
   alias Obr.ConfigLoader, as: CF
+  alias ObrView.ThemeMapping
 
   #
   #
@@ -17,12 +18,15 @@ defmodule ObrWeb.HomeLive do
     config = CF.get_config()
     # Subscribe to Core table updates
     _ = Obr.Core.subscribe()
+    # resolve theme module
+    theme = ThemeMapping.resolve(String.to_atom(config.theme))
 
     {
       :ok,
       #
       socket
       #
+      |> assign(:theme, theme)
       |> assign(:config, config)
       |> assign(:items, AsyncResult.loading())
       |> assign_async(:items, fn ->

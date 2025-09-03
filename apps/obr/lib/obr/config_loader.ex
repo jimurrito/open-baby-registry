@@ -2,14 +2,10 @@ defmodule Obr.ConfigLoader do
   @moduledoc """
   Handles configurations for the web server (Not the OTP server).
 
-  ## How configurations are pulled.
+  # Public API
 
-    1. Check for JSON config
-    2. If no config, generate one from ENV.
-    3. If config exists, load that data
-    4. Set to ETS
-
-  ETS will be used to pull the unified config.
+  - `get_config/0` | Retrieves the site config from ETS.
+  - `set_config/1` | Input config is set to ETS and JSON File
 
   This setup allows the config to be changes either at runtime or via a docker compose change.
 
@@ -17,6 +13,7 @@ defmodule Obr.ConfigLoader do
 
   require Logger
   use GenServer
+  alias Jason
 
   #
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

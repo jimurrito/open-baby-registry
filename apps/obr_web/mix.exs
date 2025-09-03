@@ -53,9 +53,10 @@ defmodule ObrWeb.MixProject do
       {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.26"},
-      {:obr, in_umbrella: true},
       {:jason, "~> 1.2"},
-      {:bandit, "~> 1.5"}
+      {:bandit, "~> 1.5"},
+      {:obr, in_umbrella: true},
+      {:obr_view, in_umbrella: true},
     ]
   end
 

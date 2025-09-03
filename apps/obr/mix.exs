@@ -42,6 +42,7 @@ defmodule Obr.MixProject do
       {:finch, "~> 0.20.0"},
       {:decimal, "~> 2.0"},
       {:uuid, "~> 1.1"},
+      {:jason, "~> 1.2"},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
     ]
   end
