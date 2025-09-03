@@ -7,12 +7,14 @@ defmodule ObrWeb.HomeLive do
   alias Phoenix.LiveView.AsyncResult
   alias Phoenix.LiveView.JS
   alias Obr.Auditor
+  alias Obr.ConfigLoader, as: CF
 
   #
   #
   @impl true
   def mount(_params, _session, socket) do
-    #
+    # Load default config
+    config = CF.get_config()
     # Subscribe to Core table updates
     _ = Obr.Core.subscribe()
 
@@ -20,7 +22,8 @@ defmodule ObrWeb.HomeLive do
       :ok,
       #
       socket
-      # assign the
+      #
+      |> assign(:config, config)
       |> assign(:items, AsyncResult.loading())
       |> assign_async(:items, fn ->
         {:ok, %{items: Obr.fetch_all()}}
@@ -97,7 +100,7 @@ defmodule ObrWeb.HomeLive do
       <div class="text-4xl font-bold text-purple-800 drop-shadow-lg text-center">Baby registry</div>
       <div class="text-2xl font-bold text-purple-800 drop-shadow-lg text-center">for</div>
       <div class="text-2xl font-bold text-purple-800 drop-shadow-lg text-center">
-        Eleanor Mae Immer
+        {@config.baby_name}
       </div>
 
       <hr class="my-10" />

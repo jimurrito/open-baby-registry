@@ -12,6 +12,7 @@ defmodule Obr.Application do
       # Backend
       Obr.Core,
       Obr.Auditor,
+      Obr.ConfigLoader,
       # Start the Finch HTTP client
       {Finch, name: Obr.Finch},
 

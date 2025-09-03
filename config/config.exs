@@ -14,19 +14,26 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id, :process_label, :pid, :module]
 
+config :obr,
+  config_path: System.get_env("CONFIG_PATH", "./"),
+  baby_name: "Baby Name",
+  theme: :default,
+  diaper_fund: false,
+  due_date:
+    System.get_env("DUE_DATE", DateTime.now!("Etc/UTC") |> DateTime.add(6570, :hour) |> to_string)
+
 
 config :obr_web,
   generators: [context_app: :obr]
 
-
 config :obr_mgmt_web,
   generators: [context_app: :obr]
-
 
 # Configures the public endpoint
 config :obr_web, ObrWeb.Endpoint,
   server: true,
   url: [host: "localhost"],
+  check_origin: ["http://localhost:4000"],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
     formats: [html: ObrWeb.ErrorHTML, json: ObrWeb.ErrorJSON],
@@ -35,11 +42,11 @@ config :obr_web, ObrWeb.Endpoint,
   pubsub_server: Obr.PubSub,
   live_view: [signing_salt: "EAAQo9R/"]
 
-
 # Configures the mgmt endpoint
 config :obr_mgmt_web, ObrMgmtWeb.Endpoint,
   server: true,
   url: [host: "localhost"],
+  check_origin: ["http://localhost:4400"],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
     formats: [html: ObrMgmtWeb.ErrorHTML, json: ObrMgmtWeb.ErrorJSON],
@@ -47,8 +54,6 @@ config :obr_mgmt_web, ObrMgmtWeb.Endpoint,
   ],
   pubsub_server: Obr.PubSub,
   live_view: [signing_salt: "EAAQo9R/"]
-
-
 
 # Configure esbuild (the version is required)
 config :esbuild,
@@ -65,7 +70,6 @@ config :esbuild,
     cd: Path.expand("../apps/obr_mgmt_web/assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]
-
 
 # Configure tailwind (the version is required)
 config :tailwind,
