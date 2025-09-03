@@ -1,5 +1,11 @@
 import Config
 
+#
+#
+# Mnesia config
+config :mnesia,
+  dir: ~c"./db"
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #
@@ -10,6 +16,19 @@ config :obr_web, ObrWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   http: [ip: {127, 0, 0, 1}, port: 4000],
+  check_origin: false,
+  code_reloader: true,
+  debug_errors: true,
+  secret_key_base: "VNWN+XVFpRiX66BKrmxtWBBU2PEkL5GujHwXbavjSJbiMUM53NgJcPUrnkEDVpPx",
+  watchers: [
+    esbuild: {Esbuild, :install_and_run, [:obr_web, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:obr_web, ~w(--watch)]}
+  ]
+
+config :obr_mgmt_web, ObrMgmtWeb.Endpoint,
+  # Binding to loopback ipv4 address prevents access from other machines.
+  # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
+  http: [ip: {127, 0, 0, 1}, port: 4400],
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
@@ -52,8 +71,20 @@ config :obr_web, ObrWeb.Endpoint,
     ]
   ]
 
+config :obr_mgmt_web, ObrWeb.Endpoint,
+  live_reload: [
+    patterns: [
+      ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
+      ~r"priv/gettext/.*(po)$",
+      ~r"lib/obr_web/(controllers|live|components)/.*(ex|heex)$"
+    ]
+  ]
+
 # Enable dev routes for dashboard and mailbox
 config :obr_web, dev_routes: true
+
+# Enable dev routes for dashboard and mailbox
+config :obr_mgmt_web, dev_routes: true
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"

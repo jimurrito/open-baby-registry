@@ -9,6 +9,12 @@
 # move said applications out of the umbrella.
 import Config
 
+# Configures Elixir's Logger
+config :logger, :console,
+  format: "$time $metadata[$level] $message\n",
+  metadata: [:request_id, :process_label, :pid, :module]
+
+
 config :obr_web,
   generators: [context_app: :obr]
 
