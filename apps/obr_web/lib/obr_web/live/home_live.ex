@@ -5,11 +5,11 @@ defmodule ObrWeb.HomeLive do
   use ObrWeb, :live_view
 
   alias Phoenix.LiveView.AsyncResult
-  alias Phoenix.LiveView.JS
   alias Obr.Auditor
   alias Obr.ConfigLoader, as: CF
-  alias ObrView.ThemeMapping
-
+  import ObrWeb.CommonComponents
+  import ObrWeb.RegistyComponents
+  
   #
   #
   @impl true
@@ -18,21 +18,18 @@ defmodule ObrWeb.HomeLive do
     config = CF.get_config()
     # Subscribe to Core table updates
     _ = Obr.Core.subscribe()
-    # resolve theme module
-    theme = ThemeMapping.resolve(String.to_atom(config.theme))
 
-    {
-      :ok,
-      #
+    socket =
       socket
-      #
-      |> assign(:theme, theme)
+      # |> assign(:theme, config.theme)
+      # |> assign(:theme, "boy")
       |> assign(:config, config)
       |> assign(:items, AsyncResult.loading())
       |> assign_async(:items, fn ->
         {:ok, %{items: Obr.fetch_all()}}
       end)
-    }
+
+    {:ok, socket}
   end
 
   #
@@ -101,232 +98,21 @@ defmodule ObrWeb.HomeLive do
   def render(assigns) do
     ~H"""
     <div>
-      <div class="text-4xl font-bold text-purple-800 drop-shadow-lg text-center">Baby registry</div>
-      <div class="text-2xl font-bold text-purple-800 drop-shadow-lg text-center">for</div>
-      <div class="text-2xl font-bold text-purple-800 drop-shadow-lg text-center">
-        {@config.baby_name}
-      </div>
-
-      <hr class="my-10" />
-
-      <div>
-        <.con_list {assigns} />
-      </div>
-
-      <hr class="my-10" />
-
-      <div>
-        <.con_donations {assigns} />
-      </div>
+      <.title text_size="text-5xl">Baby Registry</.title>
+      <.title text_size="text-3xl" class="my-3">for</.title>
+      <.title text_size="text-4xl">{@config.baby_name}</.title>
+      <!---->
+      <.hr />
+      <!---->
+      <.registry_item_list {assigns} />
+      <!---->
+      <.hr />
+      <!---->
+      <.con_donations {assigns} />
     </div>
     """
   end
 
-  #
-  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-  #
-  # Constructors
-  #
-
-  #
-  #
-  @doc """
-  Constructs the list of registry items
-  """
-
-  attr(:items, :list, required: true)
-
-  def con_list(assigns) do
-    ~H"""
-    <.async_result :let={items} assign={@items}>
-      <:loading>Loading board...</:loading>
-      <:failed :let={_failure}>There was an error loading records.</:failed>
-      <div class="my-4">
-        <%= for {_tb, id, name, price, purchased?, store, url, ext, _created_on, _last_change} <- items do %>
-          <div class={"grid grid-cols-[150px_1fr_150px] gap-2 items-start rounded-md drop-shadow-lg p-4 bg-white border-4 border-purple-300 my-4 #{is_purchased?(purchased?)}"}>
-            <!---->
-            <div class="justify-center">
-              <a href={"id://#{id}"} class="font-bold">ⓘ</a>
-              <div></div>
-              <a class="font-bold text-xl underline" href={url}>{truncate(name)}</a>
-              <div class="my-3 font-bold text-xl text-green-700">$ {Decimal.to_string(price)}</div>
-              <div class="flex">Bought from: <.con_bought_from {%{store: store}} /></div>
-              <.con_purchased? {%{id: id, purchased?: purchased?}} />
-            </div>
-            <!---->
-            <div class=""></div>
-            <!---->
-            <div class="mx-auto">
-              <a href={url}>
-                <img
-                  src={Map.get(ext, :img, "/images/shopping_cart.png")}
-                  alt="Shopping cart"
-                  class="w-[150px] h-[150px] object-contain opacity-100"
-                />
-              </a>
-            </div>
-            <!---->
-            <.con_purchase_modal {%{id: id, name: name, audit_meta: @audit_meta}} />
-          </div>
-        <% end %>
-      </div>
-    </.async_result>
-    """
-  end
-
-  #
-  #
-  @doc """
-  Constructs `Bought From:` data
-
-  # Options:
-
-      :amz
-      :target
-      :walmart
-      "other"
-
-  """
-  def con_bought_from(assigns) do
-    # Get data from fake assigns
-    Map.get(assigns, :store)
-    |> case do
-      #
-      #
-      :amz ->
-        ~H"""
-        <a href="https://a.co">
-          <img src="/images/amz_logo.png" alt="AMZ Logo" class="w-[46px] h-[28px] object-contain" />
-        </a>
-        """
-
-      #
-      #
-      :target ->
-        ~H"""
-        <a href="https://target.com">
-          <img src="/images/target_logo.png" alt="target Logo" class="w-[46px] h-[28px] object-contain" />
-        </a>
-        """
-
-      #
-      #
-      :walmart ->
-        ~H"""
-        <a href="https://walmart.com">
-          <img
-            src="/images/walmart_logo_2.png"
-            alt="walmart Logo"
-            class="w-[46px] h-[28px] object-contain"
-          />
-        </a>
-        """
-
-      #
-      #
-      _ ->
-        ~H"""
-        <div class="font-bold">
-          {assigns.store}
-        </div>
-        """
-    end
-  end
-
-  #
-  #
-  @doc """
-  Constructs state for when item is purchased
-  """
-  def con_purchased?(assigns) do
-    Map.get(assigns, :purchased?)
-    |> if do
-      ~H"""
-      <div class="font-bold text-green-700">
-        Purchased!
-      </div>
-      """
-    else
-      ~H"""
-      <div class="font-bold text-red-700">
-        Still needed!
-      </div>
-      <div>
-        <button
-          phx-click={JS.show(to: "#confirm-purchase#{assigns.id}", transition: "fade-in")}
-          class="mt-3 bg-purple-600 hover:bg-purple-300 text-white font-semibold py-1 px-2 rounded shadow text-center"
-        >
-          I bought this!
-        </button>
-      </div>
-      """
-    end
-  end
-
-  #
-  #
-  def con_purchase_modal(assigns) do
-    ~H"""
-    <!---->
-    <div
-      id={"confirm-purchase#{assigns.id}"}
-      class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
-    >
-      <div class="bg-white p-4 rounded shadow-lg">
-        <h2 class="font-bold">Confirm Purchase</h2>
-        <p class="my-2">Are you sure you purchased this?</p>
-        <div class="flex">
-          <form phx-submit="confirmed-purchase">
-            <input class="hidden" type="text" name="item_id" value={assigns.id} />
-            <input class="hidden" type="text" name="auditor_id" value={assigns.audit_meta.auditor_id} />
-            <input class="hidden" type="text" name="ip" value={assigns.audit_meta.ip} />
-            <.button
-              phx-click={JS.hide(to: "#confirm-purchase#{assigns.id}", transition: "fade-out")}
-              class="bg-green-600"
-            >
-              Yes
-            </.button>
-          </form>
-          <.button
-            phx-click={JS.hide(to: "#confirm-purchase#{assigns.id}", transition: "fade-out")}
-            class="bg-red-600 mx-2"
-          >
-            No
-          </.button>
-        </div>
-      </div>
-    </div>
-    """
-  end
-
-  #
-  #
-  def con_donations(assigns) do
-    ~H"""
-    <div class="text-center">
-      <b>Not seeing anything you like?</b> Feel free to contribute our <i>Diaper Fund</i> below!
-    </div>
-    <div class="flex">
-      <!--Cash App-->
-      <a
-        class="rounded-md drop-shadow-lg p-4 bg-white border-4 border-purple-300 my-4 mx-auto"
-        href="https://cash.app/$butterscotchboiz"
-      >
-        <img
-          src="/images/cash_app_qr.png"
-          alt="cash_app_qr"
-          class="w-[275px] h-[350px] object-contain"
-        />
-      </a>
-    </div>
-    """
-  end
-
-  #
-  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-  #
-  # Internal functions
-  #
 
   #
   #
@@ -360,32 +146,6 @@ defmodule ObrWeb.HomeLive do
       record ->
         record
     end)
-  end
-
-  #
-  #
-  @doc """
-  Determines if a block should be available
-  """
-  def is_purchased?(true) do
-    "opacity-70 pointer-events-none"
-  end
-
-  def is_purchased?(_) do
-    ""
-  end
-
-  #
-  #
-  @doc """
-  truncate long names
-  """
-  def truncate(long_string, char_limit \\ 20) do
-    if String.length(long_string) > char_limit do
-      "#{String.split_at(long_string, 20) |> elem(0)}.."
-    else
-      long_string
-    end
   end
 
   #

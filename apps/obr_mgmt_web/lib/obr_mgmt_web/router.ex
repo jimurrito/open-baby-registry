@@ -10,9 +10,9 @@ defmodule ObrMgmtWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
-  end
+  #pipeline :api do
+  #  plug :accepts, ["json"]
+  #end
 
   scope "/", ObrMgmtWeb do
     pipe_through :browser
@@ -20,8 +20,4 @@ defmodule ObrMgmtWeb.Router do
     get "/", PageController, :home
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", ObrMgmtWeb do
-  #   pipe_through :api
-  # end
 end

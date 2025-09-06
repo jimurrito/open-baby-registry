@@ -11,9 +11,9 @@ defmodule ObrWeb.Router do
     plug ObrWeb.Audit
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
-  end
+  #pipeline :api do
+  #  plug :accepts, ["json"]
+  #end
 
   live_session :default, on_mount: ObrWeb.Audit do
     scope "/", ObrWeb do

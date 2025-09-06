@@ -8,6 +8,12 @@ defmodule ObrView.Theme do
   #
   # Callbacks
   #
+  
+  #
+  @doc """
+  Theme Atomic name.
+  """
+  @callback atom_name() :: atom()
 
   #
   @doc """
@@ -20,46 +26,24 @@ defmodule ObrView.Theme do
   Theme description.
   """
   @callback description() :: binary()
-
+  
   #
   @doc """
-  Text color.
+  Dynamic header text.
   """
-  @callback text_color() :: binary()
-
+  @callback dyn_header(assigns :: map()) :: any()
+  
   #
   @doc """
-  Color used for currency.
+  Dynamic currency display.
   """
-  @callback dollar_color() :: binary()
-
+  @callback dyn_currency(assigns :: map()) :: any()
+  
   #
   @doc """
-  Page background. (Typically used in `app.html.heex`)
+  Dynamic container.
   """
-  @callback background() :: binary()
-
-  #
-  @doc """
-  Generic element border color
-  """
-  @callback border() :: binary()
-
-  #
-  @doc """
-  `dyn_container` background & border color.
-  """
-  @callback dyn_container() :: binary()
-
-  #
-  @doc"""
-  FOR TESTING UNTIL CONFIRM BEHAVIOUR
-
-  Example: `linear-gradient(270deg, #fbcfe8, #f9a8d4, #d8b4fe)`
-
-  https://tailwindcss.com/docs/background-image#setting-gradient-color-stops
-  """
-  @callback gradient() :: binary()
+  @callback dyn_container(assigns :: map()) :: any()
 
   #
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -72,6 +56,7 @@ defmodule ObrView.Theme do
   defmacro __using__(_opts) do
     quote do
       @behaviour ObrView.Theme
+      use Phoenix.Component
     end
   end
 

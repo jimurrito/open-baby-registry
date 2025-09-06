@@ -6,11 +6,27 @@ defmodule ObrView.ThemeComponents do
 
   use Phoenix.Component
   alias ObrView.Themes
+  
+  #
+  #
+  @doc """
+  Dynamic header element router
+  """
+
+  slot :inner_block, required: true
+
+  attr :theme, :map, default: Themes.DefaultTheme
+  attr :class, :string, default: ""
+
+  def dyn_header(assigns) do
+    {theme_mod, assigns} = Map.pop(assigns, :theme)
+    apply(theme_mod, :dyn_header, [assigns])
+  end
 
   #
   #
   @doc """
-  Div that acts as a basic box to hold other elements.
+  Dynamic container element router
   """
 
   slot :inner_block, required: true
@@ -19,10 +35,10 @@ defmodule ObrView.ThemeComponents do
   attr :class, :string, default: ""
 
   def dyn_container(assigns) do
-    ~H"""
-    <div class={"rounded-md drop-shadow-lg p-4 border-4 #{@theme.dyn_container()} #{@class}"}>
-      {render_slot(@inner_block)}
-    </div>
-    """
+    {theme_mod, assigns} = Map.pop(assigns, :theme)
+    apply(theme_mod, :dyn_container, [assigns])
   end
+  
+  
+  
 end
