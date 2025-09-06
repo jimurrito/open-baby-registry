@@ -28,7 +28,7 @@ defmodule ObrWeb.Audit do
     # make session ID
     auditor_id = UUID.uuid4()
     client_ip = :inet.ntoa(conn.remote_ip) |> to_string()
-    audit_meta = %{auditor_id: auditor_id, ip: client_ip}
+    audit_meta = %{audit_id: auditor_id, ip: client_ip}
     # push connection info to Auditor
     :ok = Auditor.track_connection(client_ip, auditor_id)
 

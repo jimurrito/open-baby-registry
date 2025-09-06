@@ -8,6 +8,7 @@ defmodule ObrWeb.RegistyComponents do
 
   import ObrWeb.CommonComponents
   import ObrWeb.ComponentTools
+  import ObrWeb.AuditComponents
   # alias Phoenix.LiveView.AsyncResult
   alias Phoenix.LiveView.JS
 
@@ -66,9 +67,9 @@ defmodule ObrWeb.RegistyComponents do
         <!--Dollar Amount-->
         <div class="my-3 font-bold text-xl text-green-700">$ {Decimal.to_string(@price)}</div>
         <!--Bought from `x`-->
-        <div class="flex">Bought from: <.bought_from store={@store} /></div>
-        <!--Purchase status-->
-        <.con_purchased? {%{id: @id, purchased?: @purchased?}} />
+        <div class="flex">Bought from: <.bought_from {assigns} /></div>
+        <!--Purchase status + Purchase button-->
+        <.purchase_status {assigns} />
       </div>
       <!--Divider-->
       <div></div>
@@ -80,14 +81,12 @@ defmodule ObrWeb.RegistyComponents do
           alt="Shopping cart"
         />
       </div>
-      <!--Purchase button + Modal pop-out-->
-      <.con_purchase_modal {%{id: @id, name: @name, audit_meta: @audit_meta}} />
+      <!--Modal pop-out (hidden by default)-->
+      <.purchase_modal {assigns} />
       <!---->
     </.container>
     """
   end
-
-
 
   #
   #
@@ -140,19 +139,15 @@ defmodule ObrWeb.RegistyComponents do
   end
 
   #
-  #  NEW ^^^
-  #
-  #
-  #
-  #  OLD VVV
-  #
-
-  #
   #
   @doc """
-  Constructs state for when item is purchased
+  Constructs state for when item is purchased.
+  If item is unpurchased, the `I bought this!` button will be rendered.
   """
-  def con_purchased?(assigns) do
+
+  attr :purchased, :boolean, required: true
+
+  def purchase_status(assigns) do
     Map.get(assigns, :purchased?)
     |> if do
       ~H"""
@@ -166,12 +161,7 @@ defmodule ObrWeb.RegistyComponents do
         Still needed!
       </div>
       <div>
-        <button
-          phx-click={JS.show(to: "#confirm-purchase#{assigns.id}", transition: "fade-in")}
-          class="mt-3 bg-purple-600 hover:bg-purple-300 text-white font-semibold py-1 px-2 rounded shadow text-center"
-        >
-          I bought this!
-        </button>
+        <.i_bought_this_button {assigns} />
       </div>
       """
     end
@@ -179,30 +169,61 @@ defmodule ObrWeb.RegistyComponents do
 
   #
   #
-  def con_purchase_modal(assigns) do
+  @doc """
+  Renders the `I bought this` button. 
+  When togged, the div rendered by `purchase_modal` will become visable.
+  """
+  
+  attr :id, :string, required: true
+
+  def i_bought_this_button(assigns) do
     ~H"""
-    <!---->
+    <.button
+      phx-click={JS.show(to: "#confirm-purchase#{@id}", transition: "fade-in")}
+      class="mt-3 bg-purple-600 hover:bg-purple-300 text-white font-semibold py-1 px-2 rounded shadow text-center"
+    >
+      I bought this!
+    </.button>
+    """
+  end
+
+  #
+  #
+  @doc """
+  Purchase confirmation modal dialog. Hidden by default.
+  """
+
+  attr :id, :string, required: true
+  attr :audit_meta, :map, required: true
+
+  def purchase_modal(assigns) do
+    ~H"""
+    <!-- Gray-out layer -->
     <div
-      id={"confirm-purchase#{assigns.id}"}
+      id={"confirm-purchase#{@id}"}
       class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
     >
+      <!-- Modal box -->
       <div class="bg-white p-4 rounded shadow-lg">
         <h2 class="font-bold">Confirm Purchase</h2>
         <p class="my-2">Are you sure you purchased this?</p>
-        <div class="flex">
+        <div class="flex my-2">
           <form phx-submit="confirmed-purchase">
-            <input class="hidden" type="text" name="item_id" value={assigns.id} />
-            <input class="hidden" type="text" name="auditor_id" value={assigns.audit_meta.auditor_id} />
-            <input class="hidden" type="text" name="ip" value={assigns.audit_meta.ip} />
+            <!--Item ID payload-->
+            <input class="hidden" type="text" name="item_id" value={@id} />
+            <!--Obr.Auditor tracking payload.-->
+            <.audit_payload {assigns} />
+            <!--Yes is inside the form so it submits the confirmation-->
             <.button
-              phx-click={JS.hide(to: "#confirm-purchase#{assigns.id}", transition: "fade-out")}
+              phx-click={JS.hide(to: "#confirm-purchase#{@id}", transition: "fade-out")}
               class="bg-green-600"
             >
               Yes
             </.button>
           </form>
+          <!--No is outside the form so clicking it loses focus-->
           <.button
-            phx-click={JS.hide(to: "#confirm-purchase#{assigns.id}", transition: "fade-out")}
+            phx-click={JS.hide(to: "#confirm-purchase#{@id}", transition: "fade-out")}
             class="bg-red-600 mx-2"
           >
             No
@@ -215,7 +236,7 @@ defmodule ObrWeb.RegistyComponents do
 
   #
   #
-  def con_donations(assigns) do
+  def donation_panel(assigns) do
     ~H"""
     <div class="text-center">
       <b>Not seeing anything you like?</b> Feel free to contribute our <i>Diaper Fund</i> below!

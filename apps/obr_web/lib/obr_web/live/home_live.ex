@@ -72,7 +72,7 @@ defmodule ObrWeb.HomeLive do
         "confirmed-purchase",
         %{
           "item_id" => item_id,
-          "auditor_id" => auditor_id,
+          "audit_id" => audit_id,
           "ip" => ip
         },
         socket
@@ -80,14 +80,14 @@ defmodule ObrWeb.HomeLive do
     # VERBOSE
     IO.inspect(%{
       "item_id" => item_id,
-      "auditor_id" => auditor_id,
+      "audit_id" => audit_id,
       "ip" => ip
     })
 
     # Set change to mnesia
     :ok = Obr.mark_purchased(item_id)
     # Send update to Auditor
-    :ok = Auditor.track_purchase(ip, auditor_id, item_id)
+    :ok = Auditor.track_purchase(ip, audit_id, item_id)
     #
     {:noreply, socket}
   end
@@ -108,7 +108,7 @@ defmodule ObrWeb.HomeLive do
       <!---->
       <.hr />
       <!---->
-      <.con_donations {assigns} />
+      <.donation_panel {assigns} />
     </div>
     """
   end
