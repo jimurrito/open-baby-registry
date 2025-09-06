@@ -25,7 +25,7 @@ config :obr_web, ObrWeb.Endpoint,
     tailwind: {Tailwind, :install_and_run, [:obr_web, ~w(--watch)]}
   ]
 
-config :obr_mgmt_web, ObrMgmtWeb.Endpoint,
+config :obr_web, ObrMgmtWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   http: [ip: {127, 0, 0, 1}, port: 4400],
@@ -71,7 +71,7 @@ config :obr_web, ObrWeb.Endpoint,
     ]
   ]
 
-config :obr_mgmt_web, ObrWeb.Endpoint,
+config :obr_web, ObrMgmtWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
@@ -82,9 +82,6 @@ config :obr_mgmt_web, ObrWeb.Endpoint,
 
 # Enable dev routes for dashboard and mailbox
 config :obr_web, dev_routes: true
-
-# Enable dev routes for dashboard and mailbox
-config :obr_mgmt_web, dev_routes: true
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"

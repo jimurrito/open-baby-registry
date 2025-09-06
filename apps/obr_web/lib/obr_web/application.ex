@@ -9,10 +9,11 @@ defmodule ObrWeb.Application do
   def start(_type, _args) do
     children = [
       ObrWeb.Telemetry,
-      # Start a worker by calling: ObrWeb.Worker.start_link(arg)
-      # {ObrWeb.Worker, arg},
-      # Start to serve requests, typically the last entry
-      ObrWeb.Endpoint
+      ObrWeb.Endpoint,
+      #
+      #
+      ObrMgmtWeb.Telemetry,
+      ObrMgmtWeb.Endpoint
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

@@ -26,9 +26,10 @@ config :obr,
 config :obr_web,
   generators: [context_app: :obr]
 
-config :obr_mgmt_web,
+config :obr_web,
   generators: [context_app: :obr]
 
+  
 # Configures the public endpoint
 config :obr_web, ObrWeb.Endpoint,
   server: true,
@@ -42,8 +43,9 @@ config :obr_web, ObrWeb.Endpoint,
   pubsub_server: Obr.PubSub,
   live_view: [signing_salt: "EAAQo9R/"]
 
+  
 # Configures the mgmt endpoint
-config :obr_mgmt_web, ObrMgmtWeb.Endpoint,
+config :obr_web, ObrMgmtWeb.Endpoint,
   server: true,
   url: [host: "localhost"],
   check_origin: ["http://localhost:4400"],
@@ -55,6 +57,7 @@ config :obr_mgmt_web, ObrMgmtWeb.Endpoint,
   pubsub_server: Obr.PubSub,
   live_view: [signing_salt: "EAAQo9R/"]
 
+  
 # Configure esbuild (the version is required)
 config :esbuild,
   version: "0.17.11",
@@ -63,15 +66,9 @@ config :esbuild,
       ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
     cd: Path.expand("../apps/obr_web/assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
-  ],
-  obr_mgmt_web: [
-    args:
-      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
-    # Uses assets from `:obr_web`
-    cd: Path.expand("../apps/obr_web/assets", __DIR__),
-    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]
 
+  
 # Configure tailwind (the version is required)
 config :tailwind,
   version: "3.4.3",
@@ -82,19 +79,12 @@ config :tailwind,
       --output=../priv/static/assets/app.css
     ),
     cd: Path.expand("../apps/obr_web/assets", __DIR__)
-  ],
-  obr_mgmt_web: [
-    args: ~w(
-      --config=tailwind.config.js
-      --input=css/app.css
-      --output=../priv/static/assets/app.css
-    ),
-    # Uses assets from `:obr_web`
-    cd: Path.expand("../apps/obr_web/assets", __DIR__)
   ]
 
+  
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

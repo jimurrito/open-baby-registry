@@ -1,5 +1,5 @@
 defmodule ObrMgmtWeb.Endpoint do
-  use Phoenix.Endpoint, otp_app: :obr_mgmt_web
+  use Phoenix.Endpoint, otp_app: :obr_web
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
@@ -21,7 +21,7 @@ defmodule ObrMgmtWeb.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/",
-    from: :obr_mgmt_web,
+    from: :obr_web,
     gzip: false,
     only: ObrMgmtWeb.static_paths()
 

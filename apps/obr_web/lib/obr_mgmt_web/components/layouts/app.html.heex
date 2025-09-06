@@ -1,0 +1,14 @@
+<main class="px-4 py-20 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-2xl">
+    <.flash_group flash={@flash} />
+    {@inner_content}
+  </div>
+</main>
+<footer class="mt-6">
+  <hr class="border-t border-gray-200 mb-2" />
+  <div class="flex justify-between items-center w-full text-sm font-mono text-gray-700 p-10">
+    <div class="flex-grow text-center text-gray-600">
+      {"Made with Love by Jimurrito - v#{Application.spec(:obr)[:vsn]}"}
+    </div>
+  </div>
+</footer>

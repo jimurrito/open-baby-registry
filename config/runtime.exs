@@ -37,7 +37,7 @@ if config_env() == :prod do
     secret_key_base: secret_key_base
 
 
-  config :obr_mgmt_web, ObrMgmtWeb.Endpoint,
+  config :obr_web, ObrMgmtWeb.Endpoint,
     http: [
       # Enable IPv6 and bind on all interfaces.
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.

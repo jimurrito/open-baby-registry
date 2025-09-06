@@ -15,7 +15,7 @@ config :obr_web, ObrWeb.Endpoint,
   url: [host: "example.com", port: 4000],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
-config :obr_mgmt_web, ObrMgmtWeb.Endpoint,
+config :obr_web, ObrMgmtWeb.Endpoint,
   url: [host: "example.com", port: 4400],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
