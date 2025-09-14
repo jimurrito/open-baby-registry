@@ -59,7 +59,7 @@ defmodule ObrWeb.RegistyComponents do
 
   def registry_item(assigns) do
     ~H"""
-    <.container class={"grid grid-cols-[150px_1fr_150px] gap-2 #{make_unavailable(@purchased?)}"}>
+    <div class={"grid grid-cols-[150px_1fr_150px] gap-2 dyn-container bg-white #{make_unavailable(@purchased?)}"}>
       <!--Left-hand side-->
       <div class="justify-center">
         <!--Item Title + Link-->
@@ -84,7 +84,7 @@ defmodule ObrWeb.RegistyComponents do
       <!--Modal pop-out (hidden by default)-->
       <.purchase_modal {assigns} />
       <!---->
-    </.container>
+    </div>
     """
   end
 
@@ -180,7 +180,7 @@ defmodule ObrWeb.RegistyComponents do
     ~H"""
     <.button
       phx-click={JS.show(to: "#confirm-purchase#{@id}", transition: "fade-in")}
-      class="mt-3 bg-purple-600 hover:bg-purple-300 text-white font-semibold py-1 px-2 rounded shadow text-center"
+      class="mt-3 bg-girl-mid hover:bg-girl-lite text-white font-semibold py-1 px-2 rounded shadow text-center"
     >
       I bought this!
     </.button>

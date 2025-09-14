@@ -9,7 +9,9 @@ module.exports = {
   content: [
     "./js/**/*.js",
     "../lib/obr_web.ex",
-    "../lib/obr_web/**/*.*ex"
+    "../lib/obr_web/**/*.*ex",
+    "../lib/obr_mgmt_web.ex",
+    "../lib/obr_mgmt_web/**/*.*ex"
   ],
   theme: {
     extend: {

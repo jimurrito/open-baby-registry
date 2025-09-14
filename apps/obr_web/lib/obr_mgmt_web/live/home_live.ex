@@ -9,7 +9,8 @@ defmodule ObrMgmtWeb.HomeLive do
   alias Obr.ConfigLoader, as: CF
   import ObrWeb.CommonComponents
   import ObrWeb.RegistyComponents
-  
+  import ObrMgmtWeb.DashComponents
+
   #
   #
   @impl true
@@ -97,22 +98,44 @@ defmodule ObrMgmtWeb.HomeLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <div>
-      <.title text_size="text-5xl">Baby Registry</.title>
-      <.title text_size="text-3xl" class="my-3">for</.title>
-      <.title text_size="text-4xl">{@config.baby_name}</.title>
-      <!---->
-      <.hr />
-      <!---->
-      <.registry_item_list {assigns} />
-      <!---->
-      <.hr />
-      <!---->
-      <.donation_panel {assigns} />
+    <div class="grid grid-cols-[672px_1fr_500px] gap-10 items-start mx-20">
+      <.prod_page {assigns}/>
+      <div></div>
+      <.container class="sticky top-[56px] bg-[purple-800]">
+        <.dash {assigns}/>
+      </.container>
     </div>
     """
   end
+  
 
+  #
+  # 
+  @doc """
+  The Copy of the prod page within a container
+  """
+  
+  attr :config, :map, required: true
+  
+  def prod_page(assigns) do
+      ~H"""
+      <.container class="border-15 p-10 bg-baby-gradient animate-gradient-x">
+        <.title text_size="text-5xl">Baby Registry</.title>
+        <.title text_size="text-3xl" class="my-3">for</.title>
+        <.title text_size="text-4xl">{@config.baby_name}</.title>
+        <!---->
+        <.hr />
+        <!---->
+        <.registry_item_list {assigns} />
+        <!---->
+        <.hr />
+        <!---->
+        <.donation_panel {assigns} />
+      </.container>
+      """
+  end
+  
+  
 
   #
   #

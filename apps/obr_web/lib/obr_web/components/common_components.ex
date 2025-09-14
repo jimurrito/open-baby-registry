@@ -48,7 +48,7 @@ defmodule ObrWeb.CommonComponents do
 
   def container(assigns) do
     ~H"""
-    <div class={"my-4 p-4 drop-shadow-lg rounded-md border-4 items-start border-purple-300 bg-white #{@class}"}>
+    <div class={"my-4 p-4 drop-shadow-lg rounded-md border-4 items-start border-purple-300 #{@class}"}>
       {render_slot(@inner_block)}
     </div>
     """
