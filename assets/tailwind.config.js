@@ -29,7 +29,8 @@ module.exports = {
         },
       },
       backgroundImage: {
-        'baby-gradient': 'linear-gradient(270deg, #fbcfe8, #f9a8d4, #d8b4fe)',
+        'girl-gradient': 'linear-gradient(270deg, #fbcfe8, #f9a8d4, #d8b4fe)',
+        'boy-gradient': 'linear-gradient(270deg, #bfdbfe, #93c5fd, #a5f3fc)',
       },
       backgroundSize: {
         '600': '600% 600%',

@@ -14,15 +14,94 @@ Element components
 */
 
 @layer components {
+    /*
+    Dynamic Container
+    */
     .dyn-container {
-      @apply my-4 p-4 drop-shadow-lg rounded-md border-4 items-start;
+        @apply my-4 p-4 drop-shadow-lg rounded-md border-4 items-start;
     }
-  
     [data-theme="girl"] .dyn-container {
-      @apply border-purple-300 bg-white;
+        @apply border-purple-300;
     }
-  
     [data-theme="boy"] .dyn-container {
-      @apply border-blue-300;
+        @apply border-blue-300;
+    }
+    [data-theme="dark"] .dyn-container {
+        @apply border-gray-400;
+    }
+
+    /*
+    Title
+    */
+    .dyn-title {
+        @apply drop-shadow-lg text-center font-bold;
+    }
+    [data-theme="girl"] .dyn-title {
+        @apply text-purple-800;
+    }
+    [data-theme="boy"] .dyn-title {
+        @apply text-blue-800;
+    }
+    [data-theme="dark"] .dyn-title {
+        @apply text-gray-800;
+    }
+
+    /*
+    Title
+    */
+    .dyn-hr {
+        @apply my-10 drop-shadow-lg rounded-md border-2;
+    }
+    [data-theme="girl"] .dyn-hr {
+        @apply border-purple-300;
+    }
+    [data-theme="boy"] .dyn-hr {
+        @apply border-blue-300;
+    }
+    [data-theme="dark"] .dyn-hr {
+        @apply border-gray-400;
+    }
+
+    /*
+    Dyn-Button
+    */
+    .dyn-button {
+        @apply text-white font-semibold py-1 px-2 rounded shadow text-center;
+    }
+    [data-theme="girl"] .dyn-button {
+        @apply bg-purple-600 hover:bg-purple-300;
+    }
+    [data-theme="boy"] .dyn-button {
+        @apply bg-blue-600 hover:bg-blue-300;
+    }
+    
+    /*
+    Dyn-Button (no-inheritance, no-color)
+    */
+    .dyn-button_n {
+        @apply font-semibold py-1 px-2 rounded shadow text-center;
+    }
+
+    /*
+    Dyn-Button
+    */
+    .dyn-bg {
+        @apply bg-white;
+    }
+    [data-theme="dark"] .dyn-bg {
+        @apply bg-gray-700;
+    }
+    
+    /*
+    Background Gradient
+    */
+    [data-theme="girl"] .bg-gradient {
+        @apply bg-girl-gradient animate-gradient-x;
+    }
+    [data-theme="boy"] .bg-gradient {
+        @apply bg-boy-gradient animate-gradient-x;
+    }
+    [data-theme="dark"] .bg-gradient {
+        @apply bg-gray-600;
     }
 }
