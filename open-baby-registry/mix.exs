@@ -1,14 +1,10 @@
-defmodule ObrWeb.MixProject do
+defmodule Obr.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :obr_web,
+      app: :obr,
       version: "0.1.0",
-      build_path: "../../_build",
-      config_path: "../../config/config.exs",
-      deps_path: "../../deps",
-      lockfile: "../../mix.lock",
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
@@ -22,7 +18,7 @@ defmodule ObrWeb.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {ObrWeb.Application, []},
+      mod: {Obr.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -54,22 +50,25 @@ defmodule ObrWeb.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.26"},
       {:jason, "~> 1.2"},
-      {:bandit, "~> 1.5"},
-      {:obr, in_umbrella: true}    
+      {:dns_cluster, "~> 0.1.1"},
+      {:bandit, "~> 1.5"}
     ]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
+  # For example, to install project dependencies and perform other setup tasks, run:
+  #
+  #     $ mix setup
   #
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
       setup: ["deps.get", "assets.setup", "assets.build"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
-      "assets.build": ["tailwind obr_web", "esbuild obr_web"],
+      "assets.build": ["tailwind obr", "esbuild obr"],
       "assets.deploy": [
-        "tailwind obr_web --minify",
-        "esbuild obr_web --minify",
+        "tailwind obr --minify",
+        "esbuild obr --minify",
         "phx.digest"
       ]
     ]
