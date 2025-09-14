@@ -7,7 +7,7 @@ defmodule ObrWeb.HomeLive do
   alias Phoenix.LiveView.AsyncResult
   alias Obr.Auditor
   alias Obr.ConfigLoader, as: CF
-  import ObrWeb.CommonComponents
+  #import ObrWeb.CommonComponents
   import ObrWeb.RegistyComponents
   
   #
@@ -98,15 +98,15 @@ defmodule ObrWeb.HomeLive do
   def render(assigns) do
     ~H"""
     <div>
-      <.title text_size="text-5xl">Baby Registry</.title>
-      <.title text_size="text-3xl" class="my-3">for</.title>
-      <.title text_size="text-4xl">{@config.baby_name}</.title>
+      <div class={"drop-shadow-lg text-center font-bold text-purple-800 text-5xl"}>Baby Registry</div>
+      <div class={"drop-shadow-lg text-center font-bold text-purple-800 text-3xl my-3"}>for</div>
+      <div class={"drop-shadow-lg text-center font-bold text-purple-800 text-4xl"}>{@config.baby_name}</div>
       <!---->
-      <.hr />
+      <hr class={"my-10 drop-shadow-lg rounded-md border-2 border-purple-300"} />
       <!---->
       <.registry_item_list {assigns} />
       <!---->
-      <.hr />
+      <hr class={"my-10 drop-shadow-lg rounded-md border-2 border-purple-300"} />
       <!---->
       <.donation_panel {assigns} />
     </div>

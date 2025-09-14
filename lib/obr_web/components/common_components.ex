@@ -1,4 +1,4 @@
-defmodule ObrWeb.CommonComponents do
+defmodule ObrWeb.CommonComponentsOld do
   @moduledoc """
   Common components to render the page and streamline the use of themes.
   """

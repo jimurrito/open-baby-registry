@@ -7,7 +7,7 @@ defmodule ObrMgmtWeb.HomeLive do
   alias Phoenix.LiveView.AsyncResult
   alias Obr.Auditor
   alias Obr.ConfigLoader, as: CF
-  import ObrWeb.CommonComponents
+  #import ObrWeb.CommonComponents
   import ObrWeb.RegistyComponents
   import ObrMgmtWeb.DashComponents
 
@@ -101,9 +101,9 @@ defmodule ObrMgmtWeb.HomeLive do
     <div class="grid grid-cols-[672px_1fr_500px] gap-10 items-start mx-20">
       <.prod_page {assigns}/>
       <div></div>
-      <.container class="sticky top-[56px] bg-[purple-800]">
+      <div class="my-4 p-4 drop-shadow-lg rounded-md border-4 items-start border-purple-300 sticky top-[56px] bg-[purple-800]">
         <.dash {assigns}/>
-      </.container>
+      </div>
     </div>
     """
   end
@@ -119,19 +119,19 @@ defmodule ObrMgmtWeb.HomeLive do
   
   def prod_page(assigns) do
       ~H"""
-      <.container class="border-15 p-10 bg-baby-gradient animate-gradient-x">
-        <.title text_size="text-5xl">Baby Registry</.title>
-        <.title text_size="text-3xl" class="my-3">for</.title>
-        <.title text_size="text-4xl">{@config.baby_name}</.title>
+      <div class="my-4 p-4 drop-shadow-lg rounded-md border-4 items-start border-purple-300 border-15 p-10 bg-baby-gradient animate-gradient-x">
+        <div class={"drop-shadow-lg text-center font-bold text-purple-800 text-5xl"}>Baby Registry</div>
+        <div class={"drop-shadow-lg text-center font-bold text-purple-800 text-3xl my-3"}>for</div>
+        <div class={"drop-shadow-lg text-center font-bold text-purple-800 text-4xl"}>{@config.baby_name}</div>
         <!---->
-        <.hr />
+        <hr class={"my-10 drop-shadow-lg rounded-md border-2 border-purple-300"} />
         <!---->
         <.registry_item_list {assigns} />
         <!---->
-        <.hr />
+        <hr class={"my-10 drop-shadow-lg rounded-md border-2 border-purple-300"} />
         <!---->
         <.donation_panel {assigns} />
-      </.container>
+      </div>
       """
   end
   

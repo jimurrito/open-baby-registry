@@ -4,7 +4,7 @@ defmodule ObrMgmtWeb.DashComponents do
   """
   
   use Phoenix.Component
-  import ObrWeb.CommonComponents
+  #import ObrWeb.CommonComponents
   
   #
   #
@@ -15,10 +15,8 @@ defmodule ObrMgmtWeb.DashComponents do
   def dash(assigns) do
     ~H"""
     <div class="">
-      <.title text_size="text-2xl" >Admin Console</.title>
-    
+      <div class={"drop-shadow-lg text-center font-bold text-purple-800 text-2xl"}>Admin Console</div>   
     </div>
-    
     """
   end
   

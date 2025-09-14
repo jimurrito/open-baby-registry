@@ -6,7 +6,7 @@ defmodule ObrWeb.RegistyComponents do
   use Phoenix.Component
   import ObrWeb.CoreComponents
 
-  import ObrWeb.CommonComponents
+  #import ObrWeb.CommonComponents
   import ObrWeb.ComponentTools
   import ObrWeb.AuditComponents
   # alias Phoenix.LiveView.AsyncResult
@@ -75,11 +75,9 @@ defmodule ObrWeb.RegistyComponents do
       <div></div>
       <!--Right-hand side-->
       <div class="mx-auto">
-        <.img_link
-          url={@url}
-          src={Map.get(@ext, :img, "/images/shopping_cart.png")}
-          alt="Shopping cart"
-        />
+        <a href={@url}>
+          <img src={Map.get(@ext, :img, "/images/shopping_cart.png")} alt={@name} class={"object-contain w-[150px] h-[150px]"} />
+        </a>
       </div>
       <!--Modal pop-out (hidden by default)-->
       <.purchase_modal {assigns} />
@@ -125,15 +123,10 @@ defmodule ObrWeb.RegistyComponents do
       data ->
         # Push store data to assigns
         assigns = Map.put(assigns, :store_data, data)
-
         ~H"""
-        <.img_link
-          size="w-[46px] h-[28px]"
-          class=""
-          url={@store_data.u}
-          src={@store_data.s}
-          alt={@store_data.a}
-        />
+        <a href={@store_data.u}>
+          <img src={@store_data.s} alt={@store_data.a} class={"object-contain w-[46px] h-[28px]"} />
+        </a>
         """
     end
   end
@@ -170,10 +163,10 @@ defmodule ObrWeb.RegistyComponents do
   #
   #
   @doc """
-  Renders the `I bought this` button. 
+  Renders the `I bought this` button.
   When togged, the div rendered by `purchase_modal` will become visable.
   """
-  
+
   attr :id, :string, required: true
 
   def i_bought_this_button(assigns) do
@@ -243,13 +236,9 @@ defmodule ObrWeb.RegistyComponents do
     </div>
     <div class="flex">
       <!--Cash App-->
-      <.img_link
-        url="https://cash.app/$butterscotchboiz"
-        src="/images/cash_app_qr.png"
-        alt="cash_app_qr"
-        size="w-[275px] h-[350px]"
-        class="rounded-md drop-shadow-lg p-4 bg-white border-4 border-purple-300 my-4 mx-auto"
-      />
+      <a href={"https://www.youtube.com/watch?v=dQw4w9WgXcQ"} class={"rounded-md drop-shadow-lg p-4 bg-white border-4 border-purple-300 my-4 mx-auto"}>
+        <img src={"https://upload.wikimedia.org/wikipedia/commons/2/2f/Rickrolling_QR_code.png"} alt={"test_qrcode"} class={"object-contain w-[275px] h-[350px]"} />
+      </a>
     </div>
     """
   end
