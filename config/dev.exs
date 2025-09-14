@@ -12,7 +12,7 @@ config :mnesia,
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we can use it
 # to bundle .js and .css sources.
-config :obr_web, ObrWeb.Endpoint,
+config :obr, ObrWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   http: [ip: {127, 0, 0, 1}, port: 4000],
@@ -21,11 +21,11 @@ config :obr_web, ObrWeb.Endpoint,
   debug_errors: true,
   secret_key_base: "VNWN+XVFpRiX66BKrmxtWBBU2PEkL5GujHwXbavjSJbiMUM53NgJcPUrnkEDVpPx",
   watchers: [
-    esbuild: {Esbuild, :install_and_run, [:obr_web, ~w(--sourcemap=inline --watch)]},
-    tailwind: {Tailwind, :install_and_run, [:obr_web, ~w(--watch)]}
+    esbuild: {Esbuild, :install_and_run, [:obr, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:obr, ~w(--watch)]}
   ]
 
-config :obr_web, ObrMgmtWeb.Endpoint,
+config :obr, ObrMgmtWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   http: [ip: {127, 0, 0, 1}, port: 4400],
@@ -34,8 +34,8 @@ config :obr_web, ObrMgmtWeb.Endpoint,
   debug_errors: true,
   secret_key_base: "VNWN+XVFpRiX66BKrmxtWBBU2PEkL5GujHwXbavjSJbiMUM53NgJcPUrnkEDVpPx",
   watchers: [
-    esbuild: {Esbuild, :install_and_run, [:obr_web, ~w(--sourcemap=inline --watch)]},
-    tailwind: {Tailwind, :install_and_run, [:obr_web, ~w(--watch)]}
+    esbuild: {Esbuild, :install_and_run, [:obr, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:obr, ~w(--watch)]}
   ]
 
 # ## SSL Support
@@ -62,7 +62,7 @@ config :obr_web, ObrMgmtWeb.Endpoint,
 # different ports.
 
 # Watch static and templates for browser reloading.
-config :obr_web, ObrWeb.Endpoint,
+config :obr, ObrWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
@@ -71,7 +71,7 @@ config :obr_web, ObrWeb.Endpoint,
     ]
   ]
 
-config :obr_web, ObrMgmtWeb.Endpoint,
+config :obr, ObrMgmtWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
@@ -81,7 +81,7 @@ config :obr_web, ObrMgmtWeb.Endpoint,
   ]
 
 # Enable dev routes for dashboard and mailbox
-config :obr_web, dev_routes: true
+config :obr, dev_routes: true
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"

@@ -1,12 +1,12 @@
-defmodule ObrWeb.Endpoint do
-  use Phoenix.Endpoint, otp_app: :obr_web
+defmodule ObrMgmtWeb.Endpoint do
+  use Phoenix.Endpoint, otp_app: :obr
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
   @session_options [
     store: :cookie,
-    key: "_obr_web_key",
+    key: "_obr_mgmt_web_key",
     signing_salt: "BU6cpUrM",
     same_site: "Lax"
   ]
@@ -21,9 +21,9 @@ defmodule ObrWeb.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/",
-    from: :obr_web,
+    from: :obr,
     gzip: false,
-    only: ObrWeb.static_paths()
+    only: ObrMgmtWeb.static_paths()
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
@@ -44,5 +44,5 @@ defmodule ObrWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
-  plug ObrWeb.Router
+  plug ObrMgmtWeb.Router
 end

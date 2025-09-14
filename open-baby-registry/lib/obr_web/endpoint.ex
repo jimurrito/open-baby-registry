@@ -7,7 +7,7 @@ defmodule ObrWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_obr_key",
-    signing_salt: "j4wsK94j",
+    signing_salt: "Jg+NElaJ",
     same_site: "Lax"
   ]
 

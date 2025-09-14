@@ -8,14 +8,14 @@ config :mnesia,
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
-config :obr_web, ObrWeb.Endpoint,
+config :obr, ObrWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
   secret_key_base: "nOW3gNIPRzl1qah9o0DX8g8fij1jxhTuVpkFLagGOnIdUbvpH9RSlxIy0sneEkk5",
   server: false
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
-config :obr_web, ObrMgmtWeb.Endpoint,
+config :obr, ObrMgmtWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4402],
   secret_key_base: "nOW3gNIPRzl1qah9o0DX8g8fij1jxhTuVpkFLagGOnIdUbvpH9RSlxIy0sneEkk5",
   server: false

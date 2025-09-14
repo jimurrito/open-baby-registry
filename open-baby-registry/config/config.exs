@@ -19,7 +19,7 @@ config :obr, ObrWeb.Endpoint,
     layout: false
   ],
   pubsub_server: Obr.PubSub,
-  live_view: [signing_salt: "y10mvHrl"]
+  live_view: [signing_salt: "zrPmQEaP"]
 
 # Configure esbuild (the version is required)
 config :esbuild,

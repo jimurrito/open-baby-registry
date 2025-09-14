@@ -13,7 +13,7 @@ config :obr, ObrWeb.Endpoint,
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "yOSo55pa7qKlFyPRBqsFjJn/31HbKt8S1KqSaf2DX64wq7weYoI90HEr5ADUKpkw",
+  secret_key_base: "AX5w38dscZ5AMdc6bCm0xkor0nwA2QL5P/m3kIh1PXhgUj6rvIiSml+8Yi1OQMvE",
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:obr, ~w(--sourcemap=inline --watch)]},
     tailwind: {Tailwind, :install_and_run, [:obr, ~w(--watch)]}

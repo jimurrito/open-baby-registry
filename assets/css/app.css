@@ -1,6 +1,28 @@
-@import "tailwindcss";
-@plugin "@tailwindcss/forms";
-@variant phx-click-loading ([".phx-click-loading&", ".phx-click-loading &"]);
-@variant phx-submit-loading ([".phx-submit-loading&", ".phx-submit-loading &"]);
-@variant phx-change-loading ([".phx-change-loading&", ".phx-change-loading &"]);
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
+/*
+Theme containers
+*/
+
+@custom-variant girl (&:where([data-theme="girl"], [data-theme="girl"] *));
+@custom-variant boy (&:where([data-theme="boy"], [data-theme="boy"] *));
+
+/*
+Element components
+*/
+
+@layer components {
+    .dyn-container {
+      @apply my-4 p-4 drop-shadow-lg rounded-md border-4 items-start;
+    }
+  
+    [data-theme="girl"] .dyn-container {
+      @apply border-purple-300 bg-white;
+    }
+  
+    [data-theme="boy"] .dyn-container {
+      @apply border-blue-300;
+    }
+}

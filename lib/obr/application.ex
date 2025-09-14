@@ -19,9 +19,10 @@ defmodule Obr.Application do
       #
       # PHX dependencies
       {DNSCluster, query: Application.get_env(:obr, :dns_cluster_query) || :ignore},
-      {Phoenix.PubSub, name: Obr.PubSub}
-      # Start a worker by calling: Obr.Worker.start_link(arg)
-      # {Obr.Worker, arg}
+      {Phoenix.PubSub, name: Obr.PubSub},
+      # Endpoint servers
+      ObrWeb.Endpoint,
+      ObrMgmtWeb.Endpoint
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one, name: Obr.Supervisor)
