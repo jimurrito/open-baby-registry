@@ -10,15 +10,10 @@ fi
 
 export SECRET_KEY_BASE="$(mix phx.gen.secret)"
 
-# IEX version
-#PHX_SERVER=true _build/prod/rel/"$OTP_APP"/bin/"$OTP_APP" start_iex
+# IEX
+_build/prod/rel/"$OTP_APP"/bin/"$OTP_APP" start_iex
 
-# Non-interactive
-#
-# Only works when you add `server: true` to the config.ex endpoint config for each server.
-#_build/prod/rel/"$OTP_APP"/bin/"$OTP_APP" start_iex
+# non-interactive
+#_build/prod/rel/"$OTP_APP"/bin/"$OTP_APP" start
 
-#
-# TEMPORARY
-# Issues running the above compiled binary.
-mix phx.server
+

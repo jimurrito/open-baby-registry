@@ -5,8 +5,6 @@ FROM elixir:1.18.4-otp-28
 ARG CONFIG_PATH="/config"
 ENV CONFIG_PATH=${CONFIG_PATH}
 
-
-
 #
 ENV MIX_ENV=prod
 #
@@ -27,7 +25,7 @@ RUN mix compile
 RUN mix assets.setup
 RUN mix assets.deploy
 RUN mix phx.digest
-#RUN mix phx.gen.release # does not work with umbrella apps
+RUN mix phx.gen.release
 RUN mix release
 #
 EXPOSE 4000

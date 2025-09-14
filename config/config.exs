@@ -27,7 +27,7 @@ config :obr,
 
 # Configures the public endpoint
 config :obr, ObrWeb.Endpoint,
-  server: true,
+  server: true, # Server will always be enabled
   url: [host: "localhost"],
   check_origin: ["http://localhost:4000"],
   adapter: Bandit.PhoenixAdapter,
@@ -40,7 +40,7 @@ config :obr, ObrWeb.Endpoint,
 
 # Configures the mgmt endpoint
 config :obr, ObrMgmtWeb.Endpoint,
-  server: true,
+  server: true,  # Server will always be enabled
   url: [host: "localhost"],
   check_origin: ["http://localhost:4400"],
   adapter: Bandit.PhoenixAdapter,
