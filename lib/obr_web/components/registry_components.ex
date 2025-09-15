@@ -76,7 +76,7 @@ defmodule ObrWeb.RegistyComponents do
       <!--Divider-->
       <div></div>
       <!--Right-hand side-->
-      <div class="mx-auto">
+      <div class="mx-auto my-auto">
         <a href={@url}>
           <img
             src={Map.get(@ext, :img, "/images/shopping_cart.png")}
