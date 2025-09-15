@@ -2266,12 +2266,6 @@ Element components
   }
 }
 
-@media (min-width: 768px) {
-  .md\:grid-cols-\[200px_1fr_150px\] {
-    grid-template-columns: 200px 1fr 150px;
-  }
-}
-
 @media (min-width: 1024px) {
   .lg\:mx-0 {
     margin-left: 0px;
@@ -2280,14 +2274,6 @@ Element components
 
   .lg\:block {
     display: block;
-  }
-
-  .lg\:grid-cols-\[150px_1fr_150px\] {
-    grid-template-columns: 150px 1fr 150px;
-  }
-
-  .lg\:grid-cols-\[200px_1fr_150px\] {
-    grid-template-columns: 200px 1fr 150px;
   }
 
   .lg\:px-8 {
@@ -2304,10 +2290,6 @@ Element components
 @media (min-width: 1280px) {
   .xl\:left-\[50rem\] {
     left: 50rem;
-  }
-
-  .xl\:grid-cols-\[200px_1fr_150px\] {
-    grid-template-columns: 200px 1fr 150px;
   }
 
   .xl\:px-28 {

@@ -64,12 +64,7 @@ defmodule Obr.Auditor do
   @impl true
   def init(_init_arg) do
     Logger.info(status: :startup)
-    # Create schema ignore result as it maybe already created
-    _ = :mnesia.create_schema([node()])
-    # Start mnesia
-    :ok = :mnesia.start()
     # Start table - ignore result as it may already be created
-    _ =
       :mnesia.create_table(
         AuditorTable,
         attributes: [
@@ -84,6 +79,7 @@ defmodule Obr.Auditor do
         type: :set,
         disc_copies: [node()]
       )
+      |> IO.inspect
 
     Logger.info(status: :startup_complete)
     {:ok, :ok}

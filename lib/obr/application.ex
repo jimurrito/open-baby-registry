@@ -7,6 +7,12 @@ defmodule Obr.Application do
 
   @impl true
   def start(_type, _args) do
+    # Create schema ignore result as it maybe already created
+    :mnesia.create_schema([node()])
+    |> IO.inspect()
+    # Start mnesia
+    :ok = :mnesia.start()  
+    
     children = [
       #
       # Backend

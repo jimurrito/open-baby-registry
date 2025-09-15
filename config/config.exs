@@ -14,20 +14,20 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id, :process_label, :pid, :module]
 
-config :obr,
+config :obr, Obr.ConfigLoader,
   config_path: System.get_env("CONFIG_PATH", "./"),
   baby_name: "Baby Name",
   theme: :boy,
   diaper_fund: false,
-  due_date:
-    System.get_env("DUE_DATE", DateTime.now!("Etc/UTC") |> DateTime.add(6570, :hour) |> to_string)
+  due_date: DateTime.now!("Etc/UTC") |> DateTime.add(6570, :hour) |> to_string
 
 config :obr,
   generators: [timestamp_type: :utc_datetime]
 
 # Configures the public endpoint
 config :obr, ObrWeb.Endpoint,
-  server: true, # Server will always be enabled
+  # Server will always be enabled
+  server: true,
   url: [host: "localhost"],
   check_origin: ["http://localhost:4000"],
   adapter: Bandit.PhoenixAdapter,
@@ -40,7 +40,8 @@ config :obr, ObrWeb.Endpoint,
 
 # Configures the mgmt endpoint
 config :obr, ObrMgmtWeb.Endpoint,
-  server: true,  # Server will always be enabled
+  # Server will always be enabled
+  server: true,
   url: [host: "localhost"],
   check_origin: ["http://localhost:4400"],
   adapter: Bandit.PhoenixAdapter,

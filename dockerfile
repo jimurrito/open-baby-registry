@@ -16,7 +16,7 @@ RUN apt install inotify-tools -y
 # Import files
 # local (.) -> /app in docker
 ADD ./ /app/
-RUN mkdir /db
+RUN mkdir /db /config
 #
 WORKDIR /app
 #

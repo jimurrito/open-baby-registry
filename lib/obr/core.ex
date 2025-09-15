@@ -38,14 +38,8 @@ defmodule Obr.Core do
   @impl true
   def init(_init_arg) do
     Logger.info(status: :startup)
-    # Create schema ignore result as it maybe already created
-    :mnesia.create_schema([node()])
-    |> IO.inspect()
-    # Start mnesia
-    :ok = :mnesia.start()
     # Start table - ignore result as it may already be created
-    _ =
-      :mnesia.create_table(
+    :mnesia.create_table(
         CoreTable,
         attributes: [
           :id,
@@ -63,6 +57,7 @@ defmodule Obr.Core do
         # ram_copies: [node()]
         disc_copies: [node()]
       )
+      |> IO.inspect
 
     Logger.info(status: :startup_complete)
     {:ok, :ok}

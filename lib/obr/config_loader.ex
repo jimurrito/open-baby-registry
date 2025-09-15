@@ -106,7 +106,7 @@ defmodule Obr.ConfigLoader do
   # Pull config from App Env
   @spec get_env() :: map()
   defp get_env() do
-    Application.get_all_env(:obr) |> Enum.into(%{})
+    Application.get_all_env(:obr) |> Keyword.fetch!(__MODULE__) |> Enum.into(%{})
   end
 
   #

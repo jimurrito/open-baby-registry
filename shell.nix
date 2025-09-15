@@ -33,7 +33,7 @@ pkgs.mkShell {
     mix Tailwind.install
     #
     starship prompt
-    echo "Run 'iex -S mix phx.server' to start the Phoenix server."
+    echo "Run 'iex --name obr@obr -S mix phx.server' to start the Phoenix server."
     echo -e "Then run ':observer.start()', if you want to start observer.\n"
   '';
 }
