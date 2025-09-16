@@ -100,9 +100,7 @@ defmodule ObrMgmtWeb.HomeLive do
     <div class="grid grid-cols-[672px_1fr_500px] gap-10 items-start mx-20">
       <.prod_page {assigns} />
       <div></div>
-      <div class="my-4 p-4 drop-shadow-lg rounded-md border-4 items-start border-purple-300 sticky top-[56px] bg-[purple-800]">
-        <.dash {assigns} />
-      </div>
+      <.dash {assigns} />
     </div>
     """
   end
