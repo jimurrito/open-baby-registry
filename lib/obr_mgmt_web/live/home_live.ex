@@ -77,13 +77,6 @@ defmodule ObrMgmtWeb.HomeLive do
         },
         socket
       ) do
-    # VERBOSE
-    IO.inspect(%{
-      "item_id" => item_id,
-      "audit_id" => audit_id,
-      "ip" => ip
-    })
-
     # Set change to mnesia
     :ok = Obr.mark_purchased(item_id)
     # Send update to Auditor
@@ -91,6 +84,39 @@ defmodule ObrMgmtWeb.HomeLive do
     #
     {:noreply, socket}
   end
+
+  #
+  # handles config updates for the registry
+  @impl true
+  def handle_event(
+        "set-config",
+        %{
+          "baby-dpf" => dpf?,
+          "baby-gender" => gender,
+          "baby-name" => name
+        },
+        socket
+      ) do
+    # dpf fix
+    diaper_fund? = dpf? == "on"
+    # gender to theme
+    theme = if gender == "Mystery", do: "dark", else: String.downcase(gender)
+    # get base config
+    config =
+      CF.get_config()
+      # mod base
+      |> Map.put(:theme, theme)
+      |> Map.put(:baby_name, name)
+      |> Map.put(:diaper_fund, diaper_fund?)
+
+    # Set config
+    :ok = CF.set_config(config)
+    # Set to assigns
+    {:noreply, assign(socket,  :config, config)}
+  end
+
+  #
+  #
 
   #
   #
@@ -115,9 +141,7 @@ defmodule ObrMgmtWeb.HomeLive do
 
   def prod_page(assigns) do
     ~H"""
-    <div
-      class="dyn-container border-15 p-10 bg-gradient"
-    >
+    <div class="dyn-container border-15 p-10 bg-gradient">
       <div class="dyn-title text-5xl">Baby Registry</div>
       <div class="dyn-title text-3xl my-3">for</div>
       <div class="dyn-title text-4xl">{@config.baby_name}</div>

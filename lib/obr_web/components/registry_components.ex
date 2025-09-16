@@ -6,7 +6,6 @@ defmodule ObrWeb.RegistyComponents do
   use Phoenix.Component
   import ObrWeb.CoreComponents
 
-  # import ObrWeb.CommonComponents
   import ObrWeb.ComponentTools
   import ObrWeb.AuditComponents
   # alias Phoenix.LiveView.AsyncResult
@@ -238,18 +237,20 @@ defmodule ObrWeb.RegistyComponents do
   #
   def donation_panel(assigns) do
     ~H"""
-    <div class="text-center">
-      <b>Not seeing anything you like?</b> Feel free to contribute our <i>Diaper Fund</i> below!
-    </div>
-    <div class="flex">
-      <!--Cash App-->
-      <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="dyn-container bg-white mx-auto">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Rickrolling_QR_code.png"
-          alt="test_qrcode"
-          class="object-contain w-[275px] h-[350px]"
-        />
-      </a>
+    <div :if={@config.diaper_fund}>
+      <div class="text-center">
+        <b>Not seeing anything you like?</b> Feel free to contribute our <i>Diaper Fund</i> below!
+      </div>
+      <div class="flex">
+        <!--Cash App-->
+        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="dyn-container bg-white mx-auto">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Rickrolling_QR_code.png"
+            alt="test_qrcode"
+            class="object-contain w-[275px] h-[350px]"
+          />
+        </a>
+      </div>
     </div>
     """
   end
