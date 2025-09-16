@@ -21,8 +21,6 @@ defmodule ObrMgmtWeb.HomeLive do
 
     socket =
       socket
-      # |> assign(:theme, config.theme)
-      # |> assign(:theme, "boy")
       |> assign(:config, config)
       |> assign(:items, AsyncResult.loading())
       |> assign_async(:items, fn ->
@@ -117,7 +115,6 @@ defmodule ObrMgmtWeb.HomeLive do
       socket
       |> assign(:config, config)
       |> put_flash(:info, "Updated settings!")
-      
 
     # Set to assigns
     {:noreply, socket}
@@ -147,6 +144,9 @@ defmodule ObrMgmtWeb.HomeLive do
   @impl true
   def render(assigns) do
     ~H"""
+    <div class="flex justify-end px-20 sticky top-2 my-2">
+      <.link href="/adv" class="underline">Advanced settings</.link>
+    </div>
     <div class="grid grid-cols-[672px_1fr_500px] gap-10 items-start mx-20">
       <.prod_page {assigns} />
       <div></div>

@@ -13,7 +13,7 @@ defmodule ObrMgmtWeb.DashComponents do
 
   def dash(assigns) do
     ~H"""
-    <div class="sticky top-10">
+    <div class="sticky top-5">
       <div class="dyn-container bg-gradient overflow-y-auto">
         <!--Add "h-[..px] if we add more options"-->
         <div class="dyn-title text-xl">Registry Settings</div>

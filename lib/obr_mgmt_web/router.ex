@@ -19,6 +19,7 @@ defmodule ObrMgmtWeb.Router do
     scope "/", ObrMgmtWeb do
       pipe_through :browser
       live "/", HomeLive
+      live "/adv", AdvConfigLive
     end
   end
 end
