@@ -7,7 +7,6 @@ defmodule ObrWeb.HomeLive do
   alias Phoenix.LiveView.AsyncResult
   alias Obr.Auditor
   alias Obr.ConfigLoader, as: CF
-  # import ObrWeb.CommonComponents
   import ObrWeb.RegistyComponents
 
   #

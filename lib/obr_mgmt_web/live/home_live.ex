@@ -7,7 +7,6 @@ defmodule ObrMgmtWeb.HomeLive do
   alias Phoenix.LiveView.AsyncResult
   alias Obr.Auditor
   alias Obr.ConfigLoader, as: CF
-  #import ObrWeb.CommonComponents
   import ObrWeb.RegistyComponents
   import ObrMgmtWeb.DashComponents
 
@@ -99,43 +98,42 @@ defmodule ObrMgmtWeb.HomeLive do
   def render(assigns) do
     ~H"""
     <div class="grid grid-cols-[672px_1fr_500px] gap-10 items-start mx-20">
-      <.prod_page {assigns}/>
+      <.prod_page {assigns} />
       <div></div>
       <div class="my-4 p-4 drop-shadow-lg rounded-md border-4 items-start border-purple-300 sticky top-[56px] bg-[purple-800]">
-        <.dash {assigns}/>
+        <.dash {assigns} />
       </div>
     </div>
     """
   end
-  
 
   #
-  # 
+  #
   @doc """
   The Copy of the prod page within a container
   """
-  
-  attr :config, :map, required: true
-  
+
+  attr(:config, :map, required: true)
+
   def prod_page(assigns) do
-      ~H"""
-      <div class="my-4 p-4 drop-shadow-lg rounded-md border-4 items-start border-purple-300 border-15 p-10 bg-baby-gradient animate-gradient-x">
-        <div class={"drop-shadow-lg text-center font-bold text-purple-800 text-5xl"}>Baby Registry</div>
-        <div class={"drop-shadow-lg text-center font-bold text-purple-800 text-3xl my-3"}>for</div>
-        <div class={"drop-shadow-lg text-center font-bold text-purple-800 text-4xl"}>{@config.baby_name}</div>
-        <!---->
-        <hr class={"my-10 drop-shadow-lg rounded-md border-2 border-purple-300"} />
-        <!---->
-        <.registry_item_list {assigns} />
-        <!---->
-        <hr class={"my-10 drop-shadow-lg rounded-md border-2 border-purple-300"} />
-        <!---->
-        <.donation_panel {assigns} />
-      </div>
-      """
+    ~H"""
+    <div
+      class="dyn-container border-15 p-10 bg-gradient"
+    >
+      <div class="dyn-title text-5xl">Baby Registry</div>
+      <div class="dyn-title text-3xl my-3">for</div>
+      <div class="dyn-title text-4xl">{@config.baby_name}</div>
+      <!---->
+      <hr class="dyn-hr" />
+      <!---->
+      <.registry_item_list {assigns} />
+      <!---->
+      <hr class="dyn-hr" />
+      <!---->
+      <.donation_panel {assigns} />
+    </div>
+    """
   end
-  
-  
 
   #
   #

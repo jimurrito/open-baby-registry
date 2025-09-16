@@ -876,7 +876,7 @@ select {
 }
 
 /*
-    Title
+    Horizontal break
     */
 
 .dyn-hr {
@@ -960,7 +960,7 @@ select {
 }
 
 /*
-    Dyn-Button
+    Dyn-Background
     */
 
 .dyn-bg {
@@ -1163,11 +1163,6 @@ select {
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
-}
-
-.my-10 {
-  margin-top: 2.5rem;
-  margin-bottom: 2.5rem;
 }
 
 .my-2 {
@@ -1412,24 +1407,6 @@ select {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-@keyframes gradientX {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.animate-gradient-x {
-  animation: gradientX 15s ease infinite;
-}
-
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -1568,10 +1545,6 @@ select {
   border-width: 1px;
 }
 
-.border-2 {
-  border-width: 2px;
-}
-
 .border-4 {
   border-width: 4px;
 }
@@ -1671,8 +1644,32 @@ select {
   --tw-bg-opacity: 0.5;
 }
 
+.bg-\[url\(\'\/your-image\.jpg\'\)\] {
+  background-image: url('/your-image.jpg');
+}
+
+.bg-\[url\(\'\/images\'\)\] {
+  background-image: url('/images');
+}
+
+.bg-\[url\(\'priv\/static\/images\/admin_bg\.png\'\)\] {
+  background-image: url('priv/static/images/admin_bg.png');
+}
+
+.bg-\[url\(\'\/images\/admin_bg\.png\'\)\] {
+  background-image: url('/images/admin_bg.png');
+}
+
 .bg-\[length\:600\%_600\%\] {
   background-size: 600% 600%;
+}
+
+.bg-fixed {
+  background-attachment: fixed;
+}
+
+.bg-no-repeat {
+  background-repeat: no-repeat;
 }
 
 .fill-cyan-900 {

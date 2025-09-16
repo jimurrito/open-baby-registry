@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" class="[scrollbar-gutter:stable]">
+<html lang="en" class="[scrollbar-gutter:stable]" data-theme={@config.theme}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content={get_csrf_token()} />
+    <link rel="icon" type="image/png" sizes="16x16" href={"/images/obr_logo_border_dark.png"}>
     <.live_title default="OBR Admin Console" suffix={" · #{@config.baby_name}"}>
       {assigns[:page_title]}
     </.live_title>
@@ -11,7 +12,7 @@
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
     </script>
   </head>
-  <body class="bg-slate-600">
+  <body class="bg-slate-600 bg-[url('/images/admin_bg.png')] bg-no-repeat bg-fixed" >
     {@inner_content}
   </body>
 </html>

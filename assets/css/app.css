@@ -47,7 +47,7 @@ Element components
     }
 
     /*
-    Title
+    Horizontal break
     */
     .dyn-hr {
         @apply my-10 drop-shadow-lg rounded-md border-2;
@@ -83,7 +83,7 @@ Element components
     }
 
     /*
-    Dyn-Button
+    Dyn-Background
     */
     .dyn-bg {
         @apply bg-white;
