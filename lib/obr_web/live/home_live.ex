@@ -60,6 +60,8 @@ defmodule ObrWeb.HomeLive do
         {:mnesia_table_event, {_opt_type, update, _op_data}},
         socket
       ) do
+    # Convert update to map
+    update = Obr.Core.to_map(update)
     # Get table name from record update
     {:noreply, mnesia_update_list(socket, :items, update)}
   end
@@ -132,12 +134,10 @@ defmodule ObrWeb.HomeLive do
   """
   @spec update_record_list(list(tuple()), tuple()) :: list(tuple())
   def update_record_list(list, input_record) do
-    input_key = input_record |> elem(1)
-
     list
     |> Enum.map(fn
       # Record matches the input
-      record when elem(record, 1) == input_key ->
+      record when record.id == input_record.id ->
         input_record
 
       # all else

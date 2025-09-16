@@ -20,6 +20,8 @@ defmodule ObrMgmtWeb.Router do
       pipe_through :browser
       live "/", HomeLive
       live "/adv", AdvConfigLive
+      #
+      get "/download-backup", DownloadController, :backup
     end
   end
 end

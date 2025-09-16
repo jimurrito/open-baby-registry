@@ -1,4 +1,4 @@
-@doc"""
+"""
 
 Last backup
 
@@ -128,7 +128,7 @@ Last backup
    Decimal.new("8"), false, :amz,
    "https://www.amazon.com/Tucks-Cool-Hemorrhoid-Pad-Count/dp/B06ZYLFV8L",
    %{img: "/images/shopping_cart.png"}, ~U[2025-08-09 16:50:31.692917Z],
-   ~U[2025-08-09 16:50:31.692924Z]},
+   ~U[2025-08-09 16:50:31.692924Z]}, 
   {CoreTable, "b046eb52-eb19-4de7-bff8-2ff9024cdfec", "Baby Hair Rinser",
    Decimal.new("7"), false, :target,
    "https://www.target.com/p/frida-baby-control-the-flow-rinser/-/A-94715565?preselect=82496236#lnk=sametab",

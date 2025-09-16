@@ -40,24 +40,24 @@ defmodule Obr.Core do
     Logger.info(status: :startup)
     # Start table - ignore result as it may already be created
     :mnesia.create_table(
-        CoreTable,
-        attributes: [
-          :id,
-          :name,
-          :price,
-          :purchased?,
-          :store,
-          :url,
-          :ext,
-          :created_on,
-          :last_change
-        ],
-        index: [],
-        type: :ordered_set,
-        # ram_copies: [node()]
-        disc_copies: [node()]
-      )
-      |> IO.inspect
+      CoreTable,
+      attributes: [
+        :id,
+        :name,
+        :price,
+        :purchased?,
+        :store,
+        :url,
+        :ext,
+        :created_on,
+        :last_change
+      ],
+      index: [],
+      type: :ordered_set,
+      # ram_copies: [node()]
+      disc_copies: [node()]
+    )
+    |> IO.inspect()
 
     Logger.info(status: :startup_complete)
     {:ok, :ok}
@@ -96,8 +96,8 @@ defmodule Obr.Core do
     price = Decimal.new(price) |> Decimal.round(2)
     # write to table
     write(
-      {CoreTable, UUID.uuid4(), name, price, false, store, url, ext,
-       DateTime.now!("Etc/UTC"), DateTime.now!("Etc/UTC")}
+      {CoreTable, UUID.uuid4(), name, price, false, store, url, ext, DateTime.now!("Etc/UTC"),
+       DateTime.now!("Etc/UTC")}
     )
   end
 
@@ -110,10 +110,78 @@ defmodule Obr.Core do
 
       {CoreTable, binary(), binary(), Decimal.t(), boolean(), atom(), binary(), map(), DateTime.t(), DateTime.t()}
 
+      {
+      CoreTable,
+      "e8c94dfd-46c8-49ad-9916-3b86488af61b",  1
+      "PS5",  2
+      Decimal.new("500.00"),   3
+      false,   4
+      :walmart,  5
+      "https://www.walmart.com/ip/PlayStation-5-Digital-Console-Slim/5113183757?classType=REGULAR&athbdg=L1200",  6
+      %{
+        img: "https://i5.walmartimages.com/seo/PlayStation-5-Digital-Console-Slim_330f0b1b-c9b6-4d17-8875-f35fea51bdfd.587fde46f23ab38eb3197552e46f5305.jpeg"
+      }, 7
+      ~U[2025-09-16 17:03:33.824858Z], 8
+      ~U[2025-09-16 17:03:33.824872Z] 9
+      },
+
   """
   @spec fetch_all() :: [record()]
   def fetch_all() do
-    :mnesia.dirty_select(CoreTable, [{:mnesia.table_info(CoreTable, :wild_pattern), [], [:"$_"]}])
+    :mnesia.dirty_select(CoreTable, [
+      {{:"$1", :"$2", :"$3", :"$4", :"$5", :"$6", :"$7", :"$8", :"$9", :"$10"}, [],
+       [
+         %{
+           id: :"$2",
+           name: :"$3",
+           price: :"$4",
+           purchased?: :"$5",
+           store: :"$6",
+           url: :"$7",
+           ext: :"$8",
+           created_at: :"$9",
+           updated_at: :"$10"
+         }
+       ]}
+    ])
+  end
+
+  #
+  #
+  @doc """
+  Converts an Mnesia record to a map
+  """
+  def to_map({_tb, id, name, price, purchased?, store, url, ext, created_at, updated_at}) do
+    %{
+      id: id,
+      name: name,
+      price: price,
+      purchased?: purchased?,
+      store: store,
+      url: url,
+      ext: ext,
+      created_at: created_at,
+      updated_at: updated_at
+    }
+  end
+
+  #
+  #
+  @doc """
+  Converts map back to record.
+  """
+  def from_map(%{
+        id: id,
+        name: name,
+        price: price,
+        purchased?: purchased?,
+        store: store,
+        url: url,
+        ext: ext,
+        created_at: created_at,
+        updated_at: updated_at
+      }) do
+    {CoreTable, id, name, price, purchased?, store, url, ext, created_at, updated_at}
   end
 
   #

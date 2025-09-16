@@ -19,14 +19,13 @@ defmodule Obr.Auditor do
   Mnesia record struct
   """
   @type record() ::
-          {
-            table :: AuditorTable,
-            ip :: binary(),
-            connection_count :: non_neg_integer(),
-            connection :: connection_record(),
-            actions :: action_record(),
-            created_on :: DateTime.t(),
-            last_change :: DateTime.t()
+          %{
+            ip: binary(),
+            con_count: non_neg_integer(),
+            con: connection_record(),
+            actions: action_record(),
+            created_on: DateTime.t(),
+            updated_on: DateTime.t()
           }
 
   #
@@ -34,14 +33,14 @@ defmodule Obr.Auditor do
   @typedoc """
   Generic connection metadata struct
   """
-  @type connection_record() :: {auditor_id :: binary(), time :: DateTime.t()}
+  @type connection_record() :: %{auditor_id: binary(), time: DateTime.t()}
 
   #
   #
   @typedoc """
   Metadata struct for actions performed on the page
   """
-  @type action_record() :: {auditor_id :: binary(), item_id :: binary(), time :: DateTime.t()}
+  @type action_record() :: %{auditor_id: binary(), item_id: binary(), time: DateTime.t()}
 
   #
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -65,21 +64,21 @@ defmodule Obr.Auditor do
   def init(_init_arg) do
     Logger.info(status: :startup)
     # Start table - ignore result as it may already be created
-      :mnesia.create_table(
-        AuditorTable,
-        attributes: [
-          :ip,
-          :connection_count,
-          :connections,
-          :actions,
-          :created_on,
-          :last_change
-        ],
-        index: [],
-        type: :set,
-        disc_copies: [node()]
-      )
-      |> IO.inspect
+    :mnesia.create_table(
+      AuditorTable,
+      attributes: [
+        :ip,
+        :connection_count,
+        :connections,
+        :actions,
+        :created_on,
+        :last_change
+      ],
+      index: [],
+      type: :set,
+      disc_copies: [node()]
+    )
+    |> IO.inspect()
 
     Logger.info(status: :startup_complete)
     {:ok, :ok}
@@ -91,7 +90,7 @@ defmodule Obr.Auditor do
   def handle_cast({:new_connection, {ip, auditor_id}}, :ok) do
     # Create connection record
     now! = DateTime.now!("Etc/UTC")
-    conn_rec = {auditor_id, now!}
+    conn_rec = %{auditor_id: auditor_id, time: now!}
 
     #
     :ok =
@@ -126,7 +125,7 @@ defmodule Obr.Auditor do
   def handle_cast({:purchase, {ip, auditor_id, item_id}}, :ok) do
     # Create connection record
     now! = DateTime.now!("Etc/UTC")
-    action_rec = {auditor_id, now!, item_id}
+    action_rec = %{auditor_id: auditor_id, item_id: item_id, time: now!}
 
     #
     :ok =
@@ -159,6 +158,34 @@ defmodule Obr.Auditor do
   #
   # Public API functions
   #
+
+  #
+  #
+  @doc """
+  Dumps database state
+
+            :ip,
+          :connection_count,
+          :connections,
+          :actions,
+          :created_on,
+          :last_change
+  """
+  def fetch_all() do
+    :mnesia.dirty_select(AuditorTable, [
+      {{:_, :"$1", :"$2", :"$3", :"$4", :"$5", :"$6"}, [],
+       [
+         %{
+           ip: :"$1",
+           con_count: :"$2",
+           cons: :"$3",
+           actions: :"$4",
+           created_on: :"$5",
+           updated_on: :"$6"
+         }
+       ]}
+    ])
+  end
 
   #
   #
@@ -198,15 +225,13 @@ defmodule Obr.Auditor do
   #
   #
   defp render_stats() do
-    :mnesia.dirty_select(AuditorTable, [
-      {:mnesia.table_info(AuditorTable, :wild_pattern), [], [:"$_"]}
-    ])
-    |> Enum.map(fn {_tb, ip, con_count, conns, _actions, _co, _lc} ->
+    fetch_all()
+    |> Enum.map(fn record ->
       # create header
-      header = "|\n|\n|\n|-[ip: #{ip}, connections: #{con_count}]\n|   |\n"
+      header = "|\n|\n|\n|-[ip: #{record.ip}, connections: #{record.con_count}]\n|   |\n"
       # Create connection rows.
       body =
-        Enum.map(conns, fn {auditor_id, time} ->
+        Enum.map(record.cons, fn %{auditor_id: auditor_id, time: time} ->
           "|   |-[time: #{time}, audit_id: #{auditor_id}]"
         end)
         |> Enum.join("\n")

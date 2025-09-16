@@ -26,15 +26,15 @@ defmodule ObrWeb.RegistyComponents do
       <:failed :let={_failure}>There was an error loading records.</:failed>
       <!---->
       <div class="my-4">
-        <%= for {_tb, id, name, price, purchased?, store, url, ext, _created_on, _last_change} <- items do %>
+        <%= for item <- items do %>
           <.registry_item
-            id={id}
-            name={name}
-            price={price}
-            purchased?={purchased?}
-            store={store}
-            url={url}
-            ext={ext}
+            id={item.id}
+            name={item.name}
+            price={item.price}
+            purchased?={item.purchased?}
+            store={item.store}
+            url={item.url}
+            ext={item.ext}
             {assigns}
           />
         <% end %>

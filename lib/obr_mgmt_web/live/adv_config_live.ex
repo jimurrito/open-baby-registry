@@ -36,9 +36,25 @@ defmodule ObrMgmtWeb.AdvConfigLive do
         <!-- backup and restore DB -->
         <div class="dyn-container dyn-bg w-[400px]">
           <div class="dyn-title text-xl">Backup/Restore</div>
-          <hr class="dyn-hr border-1 my-3"/>
-          
-          
+          <hr class="dyn-hr border-1 my-3" />
+          <!-- Download backup -->
+            <.link class="dyn-button_n drop-shadow-lg border-gray-400 border-2 bg-gray-300 hover:bg-gray-400 hover:text-gray-500 my-3"
+              href={~p"/download-backup"} target="_blank"
+            >
+              Download backup
+            </.link>
+          <!-- Upload backup -->
+
+        </div>
+        <!-- CSV Upload -->
+        <div class="dyn-container dyn-bg w-[400px]">
+          <div class="dyn-title text-xl">CSV File upload</div>
+          <hr class="dyn-hr border-1 my-3" />
+          <!--
+
+          CONTENT
+
+          -->
         </div>
       </div>
     </div>
