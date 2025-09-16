@@ -1160,6 +1160,11 @@ select {
   margin-right: 5rem;
 }
 
+.mx-\[180px\] {
+  margin-left: 180px;
+  margin-right: 180px;
+}
+
 .mx-\[200px\] {
   margin-left: 200px;
   margin-right: 200px;
@@ -1326,6 +1331,10 @@ select {
   height: 100vh;
 }
 
+.max-h-20 {
+  max-height: 5rem;
+}
+
 .min-h-\[6rem\] {
   min-height: 6rem;
 }
@@ -1360,6 +1369,10 @@ select {
 
 .w-80 {
   width: 20rem;
+}
+
+.w-\[100px\] {
+  width: 100px;
 }
 
 .w-\[120px\] {
@@ -1855,6 +1868,10 @@ select {
 
 .font-semibold {
   font-weight: 600;
+}
+
+.italic {
+  font-style: italic;
 }
 
 .leading-10 {

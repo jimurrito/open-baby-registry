@@ -111,12 +111,36 @@ defmodule ObrMgmtWeb.HomeLive do
 
     # Set config
     :ok = CF.set_config(config)
+
+    #
+    socket =
+      socket
+      |> assign(:config, config)
+      |> put_flash(:info, "Updated settings!")
+      
+
     # Set to assigns
-    {:noreply, assign(socket,  :config, config)}
+    {:noreply, socket}
   end
 
   #
-  #
+  # handle adding an item
+  @impl true
+  def handle_event(
+        "add-item",
+        %{"item-cost" => cost, "item-name" => name, "item-store" => store, "item-url" => url},
+        socket
+      ) do
+    #
+    :ok = Obr.new(name, cost, String.to_atom(store), url)
+
+    socket =
+      socket
+      |> put_flash(:info, "Saved item to registry!")
+
+    #
+    {:noreply, socket}
+  end
 
   #
   #

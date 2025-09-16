@@ -93,9 +93,10 @@ defmodule Obr.Core do
   def new(name, price, store, url, ext \\ %{}) do
     # Attempt to resolve the URL for the header image
     ext = Map.put(ext, :img, ThumbFetch.fetch(url, store))
+    price = Decimal.new(price) |> Decimal.round(2)
     # write to table
     write(
-      {CoreTable, UUID.uuid4(), name, Decimal.new(price), false, store, url, ext,
+      {CoreTable, UUID.uuid4(), name, price, false, store, url, ext,
        DateTime.now!("Etc/UTC"), DateTime.now!("Etc/UTC")}
     )
   end
