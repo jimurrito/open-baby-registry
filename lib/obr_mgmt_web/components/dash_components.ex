@@ -13,8 +13,8 @@ defmodule ObrMgmtWeb.DashComponents do
 
   def dash(assigns) do
     ~H"""
-    <div class="sticky top-5">
-      <div class="dyn-container bg-gradient overflow-y-auto">
+    <div class="sticky top-16">
+      <div class="dyn-container p-3 bg-gradient overflow-y-auto">
         <!--Add "h-[..px] if we add more options"-->
         <div class="dyn-title text-xl">Registry Settings</div>
 
@@ -27,7 +27,7 @@ defmodule ObrMgmtWeb.DashComponents do
               type="text"
               name="baby-name"
               value={@config.baby_name}
-              class="mx-2 dyn-container p-1 my-2 w-full"
+              class="mx-2 dyn-container p-1 my-1 w-half"
             />
           </div>
           <!-- Baby Gender -->
@@ -45,7 +45,7 @@ defmodule ObrMgmtWeb.DashComponents do
             <label for="baby-gender" class="italic text-gray-600">Refresh to show new theme</label>
           </div>
           <!-- Diaper-Fund? -->
-          <div>
+          <div class="pointer-events-none opacity-40">
             <label for="baby-dpf" class="font-bold my-2">Enable Diaper Fund?: </label>
             <input type="hidden" name="baby-dpf" value="off" />
             <%= if @config.diaper_fund do %>

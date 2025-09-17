@@ -38,13 +38,15 @@ defmodule ObrMgmtWeb.AdvConfigLive do
           <div class="dyn-title text-xl">Backup/Restore</div>
           <hr class="dyn-hr border-1 my-3" />
           <!-- Download backup -->
-            <.link class="dyn-button_n drop-shadow-lg border-gray-400 border-2 bg-gray-300 hover:bg-gray-400 hover:text-gray-500 my-3"
-              href={~p"/download-backup"} target="_blank"
-            >
-              Download backup
-            </.link>
+          <.link
+            class="dyn-button_n drop-shadow-lg border-gray-400 border-2 bg-gray-300 hover:bg-gray-400 hover:text-gray-500 my-3"
+            href={~p"/download-backup"}
+            target="_blank"
+          >
+            Download backup
+          </.link>
           <!-- Upload backup -->
-
+            <!-- WIP -->
         </div>
         <!-- CSV Upload -->
         <div class="dyn-container dyn-bg w-[400px]">

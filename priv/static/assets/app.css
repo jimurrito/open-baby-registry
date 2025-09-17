@@ -1118,6 +1118,26 @@ select {
   top: 1.5rem;
 }
 
+.top-10 {
+  top: 2.5rem;
+}
+
+.top-7 {
+  top: 1.75rem;
+}
+
+.top-12 {
+  top: 3rem;
+}
+
+.top-16 {
+  top: 4rem;
+}
+
+.top-14 {
+  top: 3.5rem;
+}
+
 .z-0 {
   z-index: 0;
 }
@@ -1193,6 +1213,11 @@ select {
 .my-auto {
   margin-top: auto;
   margin-bottom: auto;
+}
+
+.my-1 {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
 }
 
 .mb-2 {
@@ -1804,6 +1829,16 @@ select {
   padding-bottom: 1.25rem;
 }
 
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.py-6 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
 .pb-4 {
   padding-bottom: 1rem;
 }
@@ -2341,6 +2376,11 @@ Element components
   .lg\:py-8 {
     padding-top: 2rem;
     padding-bottom: 2rem;
+  }
+
+  .lg\:px-6 {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 }
 

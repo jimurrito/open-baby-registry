@@ -144,7 +144,7 @@ defmodule ObrMgmtWeb.HomeLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <div class="flex justify-end px-20 sticky top-2 my-2">
+    <div class="flex justify-end px-20 sticky top-12 my-2">
       <.link href="/adv" class="underline">Advanced settings</.link>
     </div>
     <div class="grid grid-cols-[672px_1fr_500px] gap-10 items-start mx-20">
