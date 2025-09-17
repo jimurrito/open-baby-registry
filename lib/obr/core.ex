@@ -2,6 +2,7 @@ defmodule Obr.Core do
   @moduledoc """
   Backend core.
   """
+  require Decimal
   alias Obr.ThumbFetch
 
   require Logger
@@ -93,7 +94,7 @@ defmodule Obr.Core do
   def new(name, price, store, url, ext \\ %{}) do
     # Attempt to resolve the URL for the header image
     ext = Map.put(ext, :img, ThumbFetch.fetch(url, store))
-    price = Decimal.new(price) |> Decimal.round(2)
+    price = Decimal.new(price)
     # write to table
     write(
       {CoreTable, UUID.uuid4(), name, price, false, store, url, ext, DateTime.now!("Etc/UTC"),
@@ -181,6 +182,12 @@ defmodule Obr.Core do
         created_at: created_at,
         updated_at: updated_at
       }) do
+    #
+    price = if Decimal.is_decimal(price), do: price, else: Decimal.new(price)
+    store = if is_atom(store), do: store, else: String.to_atom(store)
+    created_at = DateTime.from_iso8601(created_at) |> elem(1)
+    updated_at = DateTime.from_iso8601(updated_at) |> elem(1)
+    #
     {CoreTable, id, name, price, purchased?, store, url, ext, created_at, updated_at}
   end
 

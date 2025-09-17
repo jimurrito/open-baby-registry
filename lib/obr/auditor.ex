@@ -190,6 +190,24 @@ defmodule Obr.Auditor do
   #
   #
   @doc """
+  Converts an Mnesia record from map back to a tuple
+  """
+  def from_map(%{
+        ip: ip,
+        con_count: con_count,
+        cons: cons,
+        actions: actions,
+        created_on: created_on,
+        updated_on: updated_on
+      }) do
+    created_on = DateTime.from_iso8601(created_on) |> elem(1)
+    updated_on = DateTime.from_iso8601(updated_on) |> elem(1)
+    {AuditorTable, ip, con_count, cons, actions, created_on, updated_on}
+  end
+
+  #
+  #
+  @doc """
   Tracks a new connection for a client.
   """
   def track_connection(ip, auditor_id) do

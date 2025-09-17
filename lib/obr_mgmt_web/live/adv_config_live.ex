@@ -15,8 +15,42 @@ defmodule ObrMgmtWeb.AdvConfigLive do
     socket =
       socket
       |> assign(:config, config)
+      |> allow_upload(:restore_file, accept: ~w(.json), max_entries: 1)
 
     {:ok, socket}
+  end
+
+  #
+  #
+  # handles consuming the backup file once uploaded
+  @impl true
+  def handle_event("backup-restore", _params, socket) do
+    :ok =
+      socket
+      |> consume_uploaded_entries(:restore_file, fn %{path: path}, _entry ->
+        {:ok,
+         File.read!(path)
+         |> Jason.decode(keys: :atoms)}
+      end)
+      |> case do
+        # Content provided
+        [ok: backup_contents] ->
+          # Push state into backup module
+          Obr.Backup.restore(backup_contents)
+
+        # No content
+        [] ->
+          :ok
+      end
+
+    {:noreply, socket}
+  end
+
+  #
+  #
+  @impl true
+  def handle_event("validate", _params, socket) do
+    {:noreply, socket}
   end
 
   #
@@ -35,18 +69,39 @@ defmodule ObrMgmtWeb.AdvConfigLive do
       <div class="flex flex-wrap gap-4">
         <!-- backup and restore DB -->
         <div class="dyn-container dyn-bg w-[400px]">
-          <div class="dyn-title text-xl">Backup/Restore</div>
-          <hr class="dyn-hr border-1 my-3" />
-          <!-- Download backup -->
-          <.link
-            class="dyn-button_n drop-shadow-lg border-gray-400 border-2 bg-gray-300 hover:bg-gray-400 hover:text-gray-500 my-3"
-            href={~p"/download-backup"}
-            target="_blank"
-          >
-            Download backup
-          </.link>
+          <div class="my-3">
+            <div class="dyn-title text-xl">Backup/Restore</div>
+            <hr class="dyn-hr border-1 my-3" />
+            <!-- Download backup -->
+            <div class="my-2 text-center font-semibold">Download current Database/Config</div>
+            <div class="flex">
+              <a
+                class="dyn-button_n drop-shadow-lg border-gray-400 border-2 bg-gray-300 hover:bg-gray-400 hover:text-gray-500 mx-auto"
+                href={~p"/download-backup"}
+                target="_blank"
+                phx-disable-with="Preparing..."
+              >
+                Download Backup
+              </a>
+            </div>
+          </div>
+          <hr class="dyn-hr my-6" />
           <!-- Upload backup -->
-            <!-- WIP -->
+          <form phx-submit="backup-restore" phx-change="validate" class="text-center">
+            <label for="restore-file" class="my-2 font-semibold">Upload backup</label>
+            <.live_file_input
+              upload={@uploads.restore_file}
+              class="dyn-button_n w-full drop-shadow-lg border-gray-400 border-2 bg-gray-300 hover:bg-gray-400 hover:text-gray-500"
+            />
+            <div class="flex">
+              <button
+                phx-disable-with="Uploading..."
+                class="dyn-button_n drop-shadow-lg border-gray-400 border-2 bg-gray-300 hover:bg-gray-400 hover:text-gray-500 my-3 mx-auto"
+              >
+                Restore
+              </button>
+            </div>
+          </form>
         </div>
         <!-- CSV Upload -->
         <div class="dyn-container dyn-bg w-[400px]">

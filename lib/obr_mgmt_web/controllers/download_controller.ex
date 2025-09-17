@@ -5,7 +5,7 @@ defmodule ObrMgmtWeb.DownloadController do
 
   use ObrMgmtWeb, :controller
 
-  alias Obr.ConfigLoader, as: CF
+  alias Obr.Backup
 
   #
   #
@@ -14,17 +14,8 @@ defmodule ObrMgmtWeb.DownloadController do
   Pushes file created to client.
   """
   def backup(conn, _params) do
-    # make backup state
-    backup =
-      %{
-        config: CF.get_config(),
-        core: Obr.fetch_all(),
-        audit: Obr.Auditor.fetch_all()
-      }
-      |> Jason.encode!(pretty: true)
-
     {:ok,
-     send_download(conn, {:binary, backup},
+     send_download(conn, {:binary, Backup.generate()},
        filename: "obr-backup-#{DateTime.now!("Etc/UTC")}.json",
        content_type: "application/json"
      )}
