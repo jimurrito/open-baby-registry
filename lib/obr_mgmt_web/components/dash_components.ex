@@ -35,11 +35,7 @@ defmodule ObrMgmtWeb.DashComponents do
             <label for="baby-gender" class="font-bold">Gender: </label>
             <select name="baby-gender" class="mx-2 dyn-container my-2 p-1 w-[120px]">
               <%= for g <- ["Mystery", "Boy", "Girl"] do %>
-                <%= if String.downcase(g) == @config.theme do %>
-                  <option selected>{g}</option>
-                <% else %>
-                  <option>{g}</option>
-                <% end %>
+                <.gender_option_selector gender={g} {assigns} />
               <% end %>
             </select>
             <label for="baby-gender" class="italic text-gray-600">Refresh to show new theme</label>
@@ -48,20 +44,7 @@ defmodule ObrMgmtWeb.DashComponents do
           <div class="pointer-events-none opacity-40">
             <label for="baby-dpf" class="font-bold my-2">Enable Diaper Fund?: </label>
             <input type="hidden" name="baby-dpf" value="off" />
-            <%= if @config.diaper_fund do %>
-              <input
-                checked
-                name="baby-dpf"
-                type="checkbox"
-                class="drop-shadow-lg border-gray-400 border-2 mx-2 checked:bg-gray-600 hover:checked:bg-gray-600"
-              />
-            <% else %>
-              <input
-                name="baby-dpf"
-                type="checkbox"
-                class="drop-shadow-lg border-gray-400 border-2 mx-2 checked:bg-gray-600 hover:checked:bg-gray-600"
-              />
-            <% end %>
+            <.diaper_fund_check check?={@config.diaper_fund} />
           </div>
           <!-- SAVE - MUST BE LAST -->
           <button
@@ -131,13 +114,45 @@ defmodule ObrMgmtWeb.DashComponents do
   #
   #
 
-  attr(:submit_name, :string, required: true)
+  attr(:gender, :string, required: true)
 
-  def cfg_option(assigns) do
-    ~H"""
-    <form phx-submit={@submit_name}>
-      <label></label>
-    </form>
-    """
+  def gender_option_selector(assigns) do
+    (String.downcase(assigns.gender) == assigns.config.theme)
+    |> if do
+      ~H"""
+      <option selected>{@gender}</option>
+      """
+    else
+      ~H"""
+      <option>{@gender}</option>
+      """
+    end
+  end
+
+  #
+  #
+
+  attr(:check?, :boolean, required: true)
+
+  def diaper_fund_check(assigns) do
+    assigns.check?
+    |> if do
+      ~H"""
+      <input
+        checked
+        name="baby-dpf"
+        type="checkbox"
+        class="drop-shadow-lg border-gray-400 border-2 mx-2 checked:bg-gray-600 hover:checked:bg-gray-600"
+      />
+      """
+    else
+      ~H"""
+      <input
+        name="baby-dpf"
+        type="checkbox"
+        class="drop-shadow-lg border-gray-400 border-2 mx-2 checked:bg-gray-600 hover:checked:bg-gray-600"
+      />
+      """
+    end
   end
 end
